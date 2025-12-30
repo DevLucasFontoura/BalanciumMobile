@@ -78,6 +78,19 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ffffff',
   },
+  balanceSection: {
+    width: '100%',
+    gap: 16,
+  },
+  balanceLabel: {
+    fontSize: 26,
+    fontWeight: '600',
+    fontStyle: 'italic',
+    color: '#000000',
+    letterSpacing: 0.5,
+    paddingHorizontal: 4,
+    marginBottom: 8,
+  },
   balanceCard: {
     width: '100%',
     padding: 24,
@@ -85,7 +98,6 @@ export default StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#000000',
-    marginBottom: 8,
     position: 'relative',
     ...Platform.select({
       ios: {
@@ -101,12 +113,6 @@ export default StyleSheet.create({
         elevation: 4,
       },
     }),
-  },
-  balanceLabel: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: 'rgba(0, 0, 0, 0.6)',
-    marginBottom: 8,
   },
   balanceValue: {
     fontSize: 36,
@@ -147,18 +153,20 @@ export default StyleSheet.create({
   },
   sectionHeader: {
     paddingHorizontal: 4,
-    gap: 6,
+    gap: 8,
+    marginBottom: 4,
   },
   sectionTitle: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: '600',
+    fontStyle: 'italic',
     color: '#000000',
-    letterSpacing: -0.3,
+    letterSpacing: 0.5,
   },
   sectionDescription: {
-    fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.6)',
-    fontWeight: '400',
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.7)',
+    fontWeight: '500',
   },
   cardsContainer: {
     width: '100%',

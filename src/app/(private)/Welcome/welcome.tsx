@@ -46,14 +46,16 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.balanceCard}>
+          <View style={styles.balanceSection}>
             <Text style={styles.balanceLabel}>Current Balance</Text>
-            <Text style={styles.balanceValue}>
-              {formatCurrency(yearTotals.saldo)}
-            </Text>
-            <TouchableOpacity style={styles.addButton} activeOpacity={0.7}>
-              <Feather name="plus" size={24} color="#000000" />
-            </TouchableOpacity>
+            <View style={styles.balanceCard}>
+              <Text style={styles.balanceValue}>
+                {formatCurrency(yearTotals.saldo)}
+              </Text>
+              <TouchableOpacity style={styles.addButton} activeOpacity={0.7}>
+                <Feather name="plus" size={24} color="#000000" />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.section}>

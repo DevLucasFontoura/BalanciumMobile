@@ -41,16 +41,15 @@ export default StyleSheet.create({
   },
   menu: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 4,
+    width: '100%',
   },
   menuItem: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
-    paddingHorizontal: 8,
     minHeight: 48,
     borderRadius: 20,
   },
@@ -58,6 +57,14 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderWidth: 0.5,
     borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  addButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    minHeight: 48,
+    borderRadius: 20,
   },
   menuLabel: {
     fontSize: 11,

@@ -50,11 +50,33 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
     }
   };
 
+  const handleAddTransaction = () => {
+    // TODO: Implementar navegação para adicionar transação
+    console.log('Adicionar transação');
+  };
+
   return (
     <View style={styles.container}>
       <BlurView intensity={60} tint="dark" style={styles.pillContainer}>
         <View style={styles.menu}>
-          {menuItems.map((item) => (
+          {menuItems.slice(0, 2).map((item) => (
+            <MenuItemComponent
+              key={item.id}
+              item={item}
+              isActive={currentScreen === item.id}
+              onPress={() => handlePress(item)}
+            />
+          ))}
+          
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={handleAddTransaction}
+            activeOpacity={0.7}
+          >
+            <Feather name="plus" size={24} color="rgba(255, 255, 255, 0.6)" />
+          </TouchableOpacity>
+
+          {menuItems.slice(2).map((item) => (
             <MenuItemComponent
               key={item.id}
               item={item}
