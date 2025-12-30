@@ -8,10 +8,20 @@ export default StyleSheet.create({
     backgroundColor: PRIMARY_COLOR,
   },
   contentContainer: {
-    paddingTop: 80,
+    paddingTop: 20,
     paddingBottom: 0,
     paddingHorizontal: 24,
     flexGrow: 1,
+  },
+  imageContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: -20,
+    marginTop: 10,
+  },
+  topImage: {
+    width: '100%',
+    height: 320,
   },
   content: {
     width: '100%',
@@ -65,38 +75,51 @@ export default StyleSheet.create({
   },
   formContainer: {
     width: '100%',
-    gap: 24,
-    marginTop: 32,
+    gap: 20,
+    marginTop: -30,
+  },
+  inputWrapper: {
+    width: '100%',
   },
   inputContainer: {
     width: '100%',
-    gap: 12,
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#000000',
+    paddingHorizontal: 16,
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#ffffff',
-    opacity: 0.9,
+  inputContainerFocused: {
+    backgroundColor: '#ffffff',
+    borderColor: '#000000',
+  },
+  inputIcon: {
+    marginRight: 12,
   },
   input: {
-    width: '100%',
-    height: 56,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    paddingHorizontal: 20,
+    flex: 1,
     fontSize: 16,
     color: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#000000',
+    padding: 0,
+  },
+  inputFocused: {
+    color: '#000000',
+  },
+  eyeIcon: {
+    padding: 4,
+    marginLeft: 8,
   },
   loginButton: {
     width: '100%',
     height: 56,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000000',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8,
+    marginTop: 12,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -104,7 +127,7 @@ export default StyleSheet.create({
           width: 0,
           height: 4,
         },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.3,
         shadowRadius: 8,
       },
       android: {
@@ -114,8 +137,9 @@ export default StyleSheet.create({
   },
   loginButtonText: {
     fontSize: 17,
-    fontWeight: '600',
-    color: PRIMARY_COLOR,
+    fontWeight: '700',
+    color: '#ffffff',
+    letterSpacing: 0.5,
   },
   forgotPasswordButton: {
     alignItems: 'center',

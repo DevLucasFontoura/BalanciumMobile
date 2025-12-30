@@ -1,4 +1,6 @@
-import { Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { useState } from 'react';
+import { Text, View, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import styles from './login.styles';
 
 interface LoginProps {
@@ -7,12 +9,25 @@ interface LoginProps {
 }
 
 export default function Login({ onNavigateToRegister, onNavigateToWelcome }: LoginProps) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailFocused, setEmailFocused] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+
   return (
     <ScrollView 
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}
     >
+      <View style={styles.imageContainer}>
+        <Image 
+          source={require('../../../../assets/img_login_page.png')}
+          style={styles.topImage}
+          resizeMode="contain"
+        />
+      </View>
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.titleContainer}>
@@ -36,39 +51,62 @@ export default function Login({ onNavigateToRegister, onNavigateToWelcome }: Log
         </View>
 
         <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="seu@email.com"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-            />
+          <View style={styles.inputWrapper}>
+            <View style={[styles.inputContainer, emailFocused && styles.inputContainerFocused]}>
+              <Feather name="mail" size={20} color={emailFocused ? '#000000' : 'rgba(255, 255, 255, 0.6)'} style={styles.inputIcon} />
+              <TextInput
+                style={[styles.input, emailFocused && styles.inputFocused]}
+                placeholder="Email"
+                placeholderTextColor={emailFocused ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)'}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoComplete="email"
+                value={email}
+                onChangeText={setEmail}
+                onFocus={() => setEmailFocused(true)}
+                onBlur={() => setEmailFocused(false)}
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Senha</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Sua senha"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              secureTextEntry
-              autoCapitalize="none"
-              autoComplete="password"
-            />
+          <View style={styles.inputWrapper}>
+            <View style={[styles.inputContainer, passwordFocused && styles.inputContainerFocused]}>
+              <Feather name="lock" size={20} color={passwordFocused ? '#000000' : 'rgba(255, 255, 255, 0.6)'} style={styles.inputIcon} />
+              <TextInput
+                style={[styles.input, passwordFocused && styles.inputFocused]}
+                placeholder="Senha"
+                placeholderTextColor={passwordFocused ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)'}
+                secureTextEntry={!showPassword}
+                autoCapitalize="none"
+                autoComplete="password"
+                value={password}
+                onChangeText={setPassword}
+                onFocus={() => setPasswordFocused(true)}
+                onBlur={() => setPasswordFocused(false)}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.eyeIcon}
+                activeOpacity={0.7}
+              >
+                <Feather
+                  name={showPassword ? 'eye-off' : 'eye'}
+                  size={20}
+                  color={passwordFocused ? '#000000' : 'rgba(255, 255, 255, 0.6)'}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <TouchableOpacity 
             style={styles.loginButton} 
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={onNavigateToWelcome}
           >
             <Text style={styles.loginButtonText}>Entrar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.forgotPasswordButton}>
+          <TouchableOpacity style={styles.forgotPasswordButton} activeOpacity={0.7}>
             <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
           </TouchableOpacity>
         </View>
