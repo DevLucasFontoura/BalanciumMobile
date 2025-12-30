@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import SplashScreen from './src/components/SplashScreen';
 import Login from './src/app/(public)/Login';
 import Register from './src/app/(public)/Register';
 import Welcome from './src/app/(private)/Welcome';
@@ -13,7 +14,10 @@ type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'mon
 const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details'];
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
   const [currentScreen, setCurrentScreen] = useState<Screen>('login');
+  const [pendingScreen, setPendingScreen] = useState<Screen | null>(null);
 
   const handleNavigate = (screen: string) => {
     // Validar se a tela existe antes de navegar
@@ -29,12 +33,47 @@ export default function App() {
     setCurrentScreen('login');
   };
 
+  const handleSplashFinish = () => {
+    setShowSplash(false);
+  };
+
+  const handleLoadingFinish = () => {
+    setShowLoading(false);
+    if (pendingScreen) {
+      setCurrentScreen(pendingScreen);
+      setPendingScreen(null);
+    }
+  };
+
+  const handleLogin = () => {
+    setShowLoading(true);
+    setPendingScreen('welcome');
+  };
+
+  if (showSplash) {
+    return (
+      <>
+        <SplashScreen onFinish={handleSplashFinish} />
+        <StatusBar style="light" />
+      </>
+    );
+  }
+
+  if (showLoading) {
+    return (
+      <>
+        <SplashScreen onFinish={handleLoadingFinish} />
+        <StatusBar style="light" />
+      </>
+    );
+  }
+
   return (
     <>
       {currentScreen === 'login' ? (
         <Login 
           onNavigateToRegister={() => setCurrentScreen('register')}
-          onNavigateToWelcome={() => setCurrentScreen('welcome')}
+          onNavigateToWelcome={handleLogin}
         />
       ) : currentScreen === 'register' ? (
         <Register onNavigateToLogin={() => setCurrentScreen('login')} />
