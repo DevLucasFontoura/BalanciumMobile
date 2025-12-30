@@ -29,12 +29,9 @@ const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) 
     >
       <Feather
         name={item.iconName}
-        size={20}
+        size={24}
         color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
       />
-      <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
-        {item.label}
-      </Text>
     </TouchableOpacity>
   );
 };
