@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 20,
-    paddingBottom: 0,
+    paddingBottom: 300,
     paddingHorizontal: 24,
     flexGrow: 1,
   },
@@ -86,7 +86,7 @@ export default StyleSheet.create({
     height: 56,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#000000',
@@ -102,7 +102,7 @@ export default StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#000000',
     padding: 0,
   },
   inputFocused: {
