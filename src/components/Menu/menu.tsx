@@ -1,4 +1,5 @@
 import { View, TouchableOpacity, Text } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { Feather } from '@expo/vector-icons';
 import styles, { PRIMARY_COLOR } from './menu.styles';
 
@@ -12,6 +13,31 @@ interface MenuProps {
   currentScreen?: string;
   onNavigate?: (screen: string) => void;
 }
+
+interface MenuItemComponentProps {
+  item: MenuItem;
+  isActive: boolean;
+  onPress: () => void;
+}
+
+const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) => {
+  return (
+    <TouchableOpacity
+      style={[styles.menuItem, isActive && styles.menuItemActive]}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
+      <Feather
+        name={item.iconName}
+        size={20}
+        color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
+      />
+      <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
+        {item.label}
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
 export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProps) {
   const menuItems: MenuItem[] = [
@@ -29,30 +55,18 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
 
   return (
     <View style={styles.container}>
-      <View style={styles.pillContainer}>
+      <BlurView intensity={60} tint="dark" style={styles.pillContainer}>
         <View style={styles.menu}>
-          {menuItems.map((item) => {
-            const isActive = currentScreen === item.id;
-            return (
-              <TouchableOpacity
-                key={item.id}
-                style={[styles.menuItem, isActive && styles.menuItemActive]}
-                onPress={() => handlePress(item)}
-                activeOpacity={0.7}
-              >
-                <Feather
-                  name={item.iconName}
-                  size={20}
-                  color={isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.5)'}
-                />
-                <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
-                  {item.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+          {menuItems.map((item) => (
+            <MenuItemComponent
+              key={item.id}
+              item={item}
+              isActive={currentScreen === item.id}
+              onPress={() => handlePress(item)}
+            />
+          ))}
         </View>
-      </View>
+      </BlurView>
     </View>
   );
 }

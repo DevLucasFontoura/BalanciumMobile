@@ -16,21 +16,23 @@ export default StyleSheet.create({
   pillContainer: {
     width: '100%',
     maxWidth: 600,
-    backgroundColor: 'rgb(0, 0, 0)',
+    backgroundColor: '#000000',
     borderRadius: 28,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
+    overflow: 'hidden',
+    position: 'relative',
     ...Platform.select({
       ios: {
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
-          height: 4,
+          height: 8,
         },
-        shadowOpacity: 0.3,
-        shadowRadius: 12,
+        shadowOpacity: 0.15,
+        shadowRadius: 20,
       },
       android: {
         elevation: 8,
@@ -47,25 +49,27 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 8,
+    paddingVertical: 12,
     paddingHorizontal: 8,
-    borderRadius: 20,
     gap: 4,
     minHeight: 48,
+    borderRadius: 20,
   },
   menuItemActive: {
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderWidth: 0.5,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   menuLabel: {
     fontSize: 11,
     fontWeight: '500',
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: 'rgba(255, 255, 255, 0.6)',
     letterSpacing: -0.1,
     marginTop: 2,
   },
   menuLabelActive: {
     color: '#ffffff',
-    fontWeight: '600',
+    fontWeight: '700',
   },
 });
 

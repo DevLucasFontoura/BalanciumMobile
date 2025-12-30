@@ -15,7 +15,8 @@
     "ios": {
       "supportsTablet": true,
       "statusBarStyle": "light",
-      "backgroundColor": "#14ba82"
+      "backgroundColor": "#14ba82",
+      "bundleIdentifier": "com.devlucasfontoura.balanciummobile"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +29,8 @@
         "backgroundColor": "#14ba82"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.devlucasfontoura.balanciummobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
