@@ -158,11 +158,11 @@ export default StyleSheet.create({
     paddingTop: 24,
     paddingBottom: 40,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopColor: 'rgba(0, 0, 0, 0.3)',
   },
   signupText: {
     fontSize: 15,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#000000',
   },
   signupLink: {
     fontSize: 15,

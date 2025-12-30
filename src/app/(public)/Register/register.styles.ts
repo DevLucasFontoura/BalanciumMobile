@@ -5,13 +5,23 @@ const PRIMARY_COLOR = '#14ba82';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   contentContainer: {
-    paddingTop: 80,
+    paddingTop: 20,
     paddingBottom: 40,
     paddingHorizontal: 24,
     flexGrow: 1,
+  },
+  imageContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: -20,
+    marginTop: 10,
+  },
+  topImage: {
+    width: '100%',
+    height: 320,
   },
   content: {
     width: '100%',
@@ -25,16 +35,42 @@ export default StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
+  formContainer: {
+    width: '100%',
+    gap: 20,
+    marginTop: -30,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
   welcomeTitle: {
-    fontSize: 40,
+    fontSize: 44,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#000000',
     textAlign: 'left',
-    lineHeight: 48,
+    lineHeight: 52,
+    letterSpacing: -0.5,
+  },
+  balanciumWrapper: {
+    position: 'relative',
+  },
+  balanciumOutline: {
+    position: 'absolute',
+    fontSize: 56,
+    fontWeight: '700',
+    color: '#000000',
+    lineHeight: 64,
     letterSpacing: -0.5,
   },
   balanciumHighlight: {
-    color: PRIMARY_COLOR,
+    fontSize: 56,
+    fontWeight: '700',
+    color: '#ffffff',
+    lineHeight: 64,
+    letterSpacing: -0.5,
+    position: 'relative',
   },
   welcomeSubtitle: {
     fontSize: 16,
@@ -42,42 +78,47 @@ export default StyleSheet.create({
     textAlign: 'left',
     lineHeight: 24,
   },
-  formContainer: {
+  inputWrapper: {
     width: '100%',
-    gap: 20,
   },
   inputContainer: {
     width: '100%',
-    gap: 12,
+    height: 56,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#000000',
+    paddingHorizontal: 16,
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#ffffff',
-    opacity: 0.9,
+  inputContainerFocused: {
+    backgroundColor: '#ffffff',
+    borderColor: '#000000',
+  },
+  inputIcon: {
+    marginRight: 12,
   },
   input: {
-    width: '100%',
-    height: 56,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    paddingHorizontal: 20,
+    flex: 1,
     fontSize: 16,
-    color: '#ffffff',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    color: '#000000',
+    padding: 0,
+  },
+  inputFocused: {
+    color: '#000000',
   },
   registerButton: {
     width: '100%',
     height: 56,
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: '#000000',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8,
+    marginTop: 12,
     ...Platform.select({
       ios: {
-        shadowColor: PRIMARY_COLOR,
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 4,
@@ -92,8 +133,9 @@ export default StyleSheet.create({
   },
   registerButtonText: {
     fontSize: 17,
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#ffffff',
+    letterSpacing: 0.5,
   },
   loginContainer: {
     flexDirection: 'row',
@@ -102,15 +144,15 @@ export default StyleSheet.create({
     marginTop: 24,
     paddingTop: 24,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopColor: 'rgba(0, 0, 0, 0.3)',
   },
   loginText: {
     fontSize: 15,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#000000',
   },
   loginLink: {
     fontSize: 15,
-    color: PRIMARY_COLOR,
+    color: '#ffffff',
     fontWeight: '600',
   },
 });
