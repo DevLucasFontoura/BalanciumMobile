@@ -15,12 +15,24 @@ export default function Login({ onNavigateToRegister, onNavigateToWelcome }: Log
     >
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.welcomeTitle}>
-            Bem vindo ao <Text style={styles.balanciumHighlight}>Balancium</Text>
-          </Text>
-          <Text style={styles.welcomeSubtitle}>
-            Bem vindo de volta
-          </Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.welcomeTitle}>
+              Bem vindo ao{' '}
+            </Text>
+            <View style={styles.balanciumWrapper}>
+              {/* Contorno preto - 8 direções */}
+              <Text style={[styles.balanciumOutline, { top: -1.5, left: -1.5 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: -1.5, left: 0 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: -1.5, left: 1.5 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: 0, left: -1.5 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: 0, left: 1.5 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: 1.5, left: -1.5 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: 1.5, left: 0 }]}>Balancium</Text>
+              <Text style={[styles.balanciumOutline, { top: 1.5, left: 1.5 }]}>Balancium</Text>
+              {/* Texto branco por cima */}
+              <Text style={styles.balanciumHighlight}>Balancium</Text>
+            </View>
+          </View>
         </View>
 
         <View style={styles.formContainer}>

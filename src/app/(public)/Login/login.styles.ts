@@ -5,18 +5,18 @@ const PRIMARY_COLOR = '#14ba82';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   contentContainer: {
     paddingTop: 80,
-    paddingBottom: 40,
+    paddingBottom: 0,
     paddingHorizontal: 24,
     flexGrow: 1,
   },
   content: {
     width: '100%',
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     gap: 48,
   },
   header: {
@@ -25,16 +25,37 @@ export default StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
   welcomeTitle: {
-    fontSize: 40,
+    fontSize: 56,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#000000',
     textAlign: 'left',
-    lineHeight: 48,
+    lineHeight: 64,
+    letterSpacing: -0.5,
+  },
+  balanciumWrapper: {
+    position: 'relative',
+  },
+  balanciumOutline: {
+    position: 'absolute',
+    fontSize: 56,
+    fontWeight: '700',
+    color: '#000000',
+    lineHeight: 64,
     letterSpacing: -0.5,
   },
   balanciumHighlight: {
-    color: PRIMARY_COLOR,
+    fontSize: 56,
+    fontWeight: '700',
+    color: '#ffffff',
+    lineHeight: 64,
+    letterSpacing: -0.5,
+    position: 'relative',
   },
   welcomeSubtitle: {
     fontSize: 16,
@@ -45,6 +66,7 @@ export default StyleSheet.create({
   formContainer: {
     width: '100%',
     gap: 24,
+    marginTop: 32,
   },
   inputContainer: {
     width: '100%',
@@ -65,24 +87,24 @@ export default StyleSheet.create({
     fontSize: 16,
     color: '#ffffff',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: '#000000',
   },
   loginButton: {
     width: '100%',
     height: 56,
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 8,
     ...Platform.select({
       ios: {
-        shadowColor: PRIMARY_COLOR,
+        shadowColor: '#000',
         shadowOffset: {
           width: 0,
           height: 4,
         },
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.2,
         shadowRadius: 8,
       },
       android: {
@@ -93,7 +115,7 @@ export default StyleSheet.create({
   loginButtonText: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#ffffff',
+    color: PRIMARY_COLOR,
   },
   forgotPasswordButton: {
     alignItems: 'center',
@@ -101,15 +123,16 @@ export default StyleSheet.create({
   },
   forgotPasswordText: {
     fontSize: 15,
-    color: PRIMARY_COLOR,
+    color: '#ffffff',
     fontWeight: '500',
   },
   signupContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: 'auto',
     paddingTop: 24,
+    paddingBottom: 40,
     borderTopWidth: 1,
     borderTopColor: 'rgba(255, 255, 255, 0.1)',
   },
@@ -119,7 +142,7 @@ export default StyleSheet.create({
   },
   signupLink: {
     fontSize: 15,
-    color: PRIMARY_COLOR,
+    color: '#ffffff',
     fontWeight: '600',
   },
 });
