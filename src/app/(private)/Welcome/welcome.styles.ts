@@ -162,19 +162,19 @@ export default StyleSheet.create({
   },
   cardsContainer: {
     width: '100%',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    gap: 12,
   },
   card: {
-    width: '48%',
+    width: '100%',
     padding: 18,
     backgroundColor: '#ffffff',
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#000000',
-    gap: 12,
-    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -190,18 +190,30 @@ export default StyleSheet.create({
       },
     }),
   },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  cardIcon: {
+    marginRight: 8,
+  },
+  cardContent: {
+    flex: 1,
     gap: 8,
   },
   cardTitle: {
-    fontSize: 15,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '600',
     color: '#000000',
   },
+  cardValueContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 4,
+  },
+  currencySymbol: {
+    fontSize: 28,
+    fontWeight: '700',
+    letterSpacing: -0.5,
+  },
   cardValue: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '700',
     letterSpacing: -0.5,
   },

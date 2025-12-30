@@ -66,33 +66,51 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
 
             <View style={styles.cardsContainer}>
               <View style={styles.card}>
-                <View style={styles.cardHeader}>
-                  <Feather name="arrow-up-circle" size={20} color="#14ba82" />
+                <Feather name="arrow-up-circle" size={40} color="#14ba82" style={styles.cardIcon} />
+                <View style={styles.cardContent}>
                   <Text style={styles.cardTitle}>Entradas</Text>
+                  <View style={styles.cardValueContainer}>
+                    <Text style={[styles.currencySymbol, styles.entradaValue]}>R$</Text>
+                    <Text style={[styles.cardValue, styles.entradaValue]}>
+                      {new Intl.NumberFormat('pt-BR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(yearTotals.entradas)}
+                    </Text>
+                  </View>
                 </View>
-                <Text style={[styles.cardValue, styles.entradaValue]}>
-                  {formatCurrency(yearTotals.entradas)}
-                </Text>
               </View>
 
               <View style={styles.card}>
-                <View style={styles.cardHeader}>
-                  <Feather name="arrow-down-circle" size={20} color="#ff4444" />
+                <Feather name="arrow-down-circle" size={40} color="#ff4444" style={styles.cardIcon} />
+                <View style={styles.cardContent}>
                   <Text style={styles.cardTitle}>Saídas</Text>
+                  <View style={styles.cardValueContainer}>
+                    <Text style={[styles.currencySymbol, styles.saidaValue]}>R$</Text>
+                    <Text style={[styles.cardValue, styles.saidaValue]}>
+                      {new Intl.NumberFormat('pt-BR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(yearTotals.saidas)}
+                    </Text>
+                  </View>
                 </View>
-                <Text style={[styles.cardValue, styles.saidaValue]}>
-                  {formatCurrency(yearTotals.saidas)}
-                </Text>
               </View>
 
               <View style={styles.card}>
-                <View style={styles.cardHeader}>
-                  <Feather name="save" size={20} color="#4A90E2" />
+                <Feather name="lock" size={40} color="#4A90E2" style={styles.cardIcon} />
+                <View style={styles.cardContent}>
                   <Text style={styles.cardTitle}>Guardado</Text>
+                  <View style={styles.cardValueContainer}>
+                    <Text style={[styles.currencySymbol, styles.guardadoValue]}>R$</Text>
+                    <Text style={[styles.cardValue, styles.guardadoValue]}>
+                      {new Intl.NumberFormat('pt-BR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(yearTotals.guardado)}
+                    </Text>
+                  </View>
                 </View>
-                <Text style={[styles.cardValue, styles.guardadoValue]}>
-                  {formatCurrency(yearTotals.guardado)}
-                </Text>
               </View>
             </View>
           </View>
