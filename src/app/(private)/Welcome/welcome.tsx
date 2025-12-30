@@ -1,4 +1,5 @@
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
 import styles from './welcome.styles';
 
@@ -8,7 +9,7 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
-  const userName = 'Usuário'; // TODO: Buscar do contexto/perfil
+  const userName = 'Lucas Fontoura'; // TODO: Buscar do contexto/perfil
   const currentYear = new Date().getFullYear();
 
   // Dados fake para visualização
@@ -34,13 +35,25 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.content}>
-          <View style={styles.headerSection}>
-            <Text style={styles.headerTitle}>
-              Olá, {userName}! <Text style={styles.welcomeEmoji}>👋</Text>
+          <View style={styles.topHeader}>
+            <View style={styles.greetingContainer}>
+              <Text style={styles.greetingText}>Hello,</Text>
+              <Text style={styles.userNameText}>{userName}!</Text>
+            </View>
+            <TouchableOpacity style={styles.notificationButton} activeOpacity={0.7}>
+              <Feather name="bell" size={22} color="#000000" />
+              <View style={styles.notificationBadge} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.balanceCard}>
+            <Text style={styles.balanceLabel}>Current Balance</Text>
+            <Text style={styles.balanceValue}>
+              {formatCurrency(yearTotals.saldo)}
             </Text>
-            <Text style={styles.headerSubtitle}>
-              Que bom ter você de volta! Vamos organizar suas finanças?
-            </Text>
+            <TouchableOpacity style={styles.addButton} activeOpacity={0.7}>
+              <Feather name="plus" size={24} color="#000000" />
+            </TouchableOpacity>
           </View>
 
           <View style={styles.section}>
@@ -54,7 +67,7 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
             <View style={styles.cardsContainer}>
               <View style={styles.card}>
                 <View style={styles.cardHeader}>
-                  <View style={[styles.cardIcon, styles.entradaIcon]} />
+                  <Feather name="arrow-up-circle" size={20} color="#14ba82" />
                   <Text style={styles.cardTitle}>Entradas</Text>
                 </View>
                 <Text style={[styles.cardValue, styles.entradaValue]}>
@@ -64,7 +77,7 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
 
               <View style={styles.card}>
                 <View style={styles.cardHeader}>
-                  <View style={[styles.cardIcon, styles.saidaIcon]} />
+                  <Feather name="arrow-down-circle" size={20} color="#ff4444" />
                   <Text style={styles.cardTitle}>Saídas</Text>
                 </View>
                 <Text style={[styles.cardValue, styles.saidaValue]}>
@@ -74,17 +87,7 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
 
               <View style={styles.card}>
                 <View style={styles.cardHeader}>
-                  <View style={[styles.cardIcon, styles.saldoIcon]} />
-                  <Text style={styles.cardTitle}>Saldo</Text>
-                </View>
-                <Text style={[styles.cardValue, styles.saldoValue]}>
-                  {formatCurrency(yearTotals.saldo)}
-                </Text>
-              </View>
-
-              <View style={styles.card}>
-                <View style={styles.cardHeader}>
-                  <View style={[styles.cardIcon, styles.guardadoIcon]} />
+                  <Feather name="save" size={20} color="#4A90E2" />
                   <Text style={styles.cardTitle}>Guardado</Text>
                 </View>
                 <Text style={[styles.cardValue, styles.guardadoValue]}>
