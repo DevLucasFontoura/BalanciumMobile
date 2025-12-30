@@ -1,46 +1,160 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const PRIMARY_COLOR = '#14ba82';
 
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   contentContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
-    paddingTop: 20,
+    paddingTop: 60,
     paddingBottom: 100,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
   },
   content: {
     width: '100%',
   },
+  pageTitle: {
+    fontSize: 32,
+    fontWeight: '700',
+    fontStyle: 'italic',
+    color: '#000000',
+    letterSpacing: -0.5,
+    paddingHorizontal: 4,
+    marginBottom: 20,
+    lineHeight: 40,
+  },
+  profileCard: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+    backgroundColor: '#000000',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  profileImageContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: PRIMARY_COLOR,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  profileInfo: {
+    flex: 1,
+    gap: 4,
+  },
+  profileName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+  profileSubtitle: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.6)',
+  },
+  groupedCard: {
+    width: '100%',
+    backgroundColor: '#000000',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  settingsRow: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.05)',
+    gap: 12,
+  },
+  lastRow: {
+    borderBottomWidth: 0,
+  },
   sectionsContainer: {
     width: '100%',
-    gap: 8,
+    gap: 12,
   },
   settingsCard: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    backgroundColor: '#000000',
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
     gap: 12,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   lockedCard: {
     opacity: 0.6,
   },
   cardTitle: {
     flex: 1,
-    fontSize: 15,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ffffff',
+  },
+  rowTitle: {
+    flex: 1,
+    fontSize: 16,
     fontWeight: '500',
     color: '#ffffff',
   },
@@ -69,14 +183,30 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    paddingVertical: 14,
+    paddingVertical: 18,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: '#000000',
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   logoutButtonText: {
-    fontSize: 15,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '600',
     color: '#ffffff',
   },
   versionInfo: {
@@ -88,11 +218,11 @@ export default StyleSheet.create({
   },
   versionLabel: {
     fontSize: 13,
-    color: 'rgba(255, 255, 255, 0.4)',
+    color: 'rgba(0, 0, 0, 0.6)',
   },
   versionText: {
     fontSize: 13,
     fontWeight: '600',
-    color: PRIMARY_COLOR,
+    color: '#000000',
   },
 });

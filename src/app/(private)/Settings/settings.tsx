@@ -13,14 +13,9 @@ export default function Settings({ currentPlan = 'Básico', onNavigate, onLogout
   const hasCategoriesAccess = currentPlan === 'Plus' || currentPlan === 'Premium';
   const hasDataExportAccess = currentPlan === 'Plus' || currentPlan === 'Premium';
 
+  const userName = 'Lucas Fontoura';
+
   const settingsSections = [
-    {
-      id: 'account',
-      title: 'Dados da Conta',
-      icon: 'user' as keyof typeof Feather.glyphMap,
-      iconColor: '#ef4444',
-      locked: false,
-    },
     {
       id: 'subscription',
       title: 'Plano e Assinatura',
@@ -84,13 +79,37 @@ export default function Settings({ currentPlan = 'Básico', onNavigate, onLogout
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.content}>
-          <View style={styles.sectionsContainer}>
-            {settingsSections.map((section) => {
+          <Text style={styles.pageTitle}>Settings</Text>
+          
+          {/* Profile Card */}
+          <TouchableOpacity
+            style={styles.profileCard}
+            onPress={() => handleCardPress('account')}
+            activeOpacity={0.7}
+          >
+            <View style={styles.profileImageContainer}>
+              <Feather name="user" size={40} color="#ffffff" />
+            </View>
+            <View style={styles.profileInfo}>
+              <Text style={styles.profileName}>{userName}</Text>
+              <Text style={styles.profileSubtitle}>Dados da Conta, Plano e mais</Text>
+            </View>
+            <Feather
+              name="chevron-right"
+              size={20}
+              color="rgba(255, 255, 255, 0.3)"
+            />
+          </TouchableOpacity>
+
+          {/* Grouped Settings Card */}
+          <View style={styles.groupedCard}>
+            {settingsSections.map((section, index) => {
               const isLocked = section.locked;
+              const isLast = index === settingsSections.length - 1;
               return (
                 <TouchableOpacity
                   key={section.id}
-                  style={[styles.settingsCard, isLocked && styles.lockedCard]}
+                  style={[styles.settingsRow, isLast && styles.lastRow]}
                   onPress={() => handleCardPress(section.id)}
                   activeOpacity={0.7}
                 >
@@ -99,7 +118,7 @@ export default function Settings({ currentPlan = 'Básico', onNavigate, onLogout
                     size={20}
                     color={isLocked ? 'rgba(255, 193, 7, 0.6)' : section.iconColor}
                   />
-                  <Text style={[styles.cardTitle, isLocked && styles.lockedTitle]}>
+                  <Text style={[styles.rowTitle, isLocked && styles.lockedTitle]}>
                     {section.title}
                   </Text>
                   {isLocked && (
@@ -118,7 +137,7 @@ export default function Settings({ currentPlan = 'Básico', onNavigate, onLogout
           <View style={styles.footerSection}>
             {onLogout && (
               <TouchableOpacity style={styles.logoutButton} onPress={onLogout} activeOpacity={0.7}>
-                <Feather name="log-out" size={18} color="#ffffff" />
+                <Feather name="log-out" size={20} color="#ffffff" />
                 <Text style={styles.logoutButtonText}>Sair</Text>
               </TouchableOpacity>
             )}

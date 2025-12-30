@@ -5,11 +5,11 @@ const PRIMARY_COLOR = '#14ba82';
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   contentContainer: {
     paddingTop: 60,
@@ -28,13 +28,15 @@ export default StyleSheet.create({
   headerTitle: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#ffffff',
+    fontStyle: 'italic',
+    color: '#000000',
     lineHeight: 40,
     letterSpacing: -0.5,
   },
   headerSubtitle: {
-    fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.7)',
+    fontWeight: '500',
     lineHeight: 24,
   },
   monthSelector: {
@@ -42,12 +44,26 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: '#000000',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   monthSelectorText: {
     fontSize: 18,
@@ -62,7 +78,7 @@ export default StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -78,8 +94,8 @@ export default StyleSheet.create({
   totalCard: {
     flex: 1,
     padding: 18,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 16,
+    backgroundColor: '#000000',
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
     gap: 8,
@@ -90,8 +106,8 @@ export default StyleSheet.create({
           width: 0,
           height: 2,
         },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
       },
       android: {
         elevation: 2,
@@ -132,15 +148,16 @@ export default StyleSheet.create({
     gap: 6,
   },
   tableTitle: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: '600',
-    color: '#ffffff',
-    letterSpacing: -0.3,
+    fontStyle: 'italic',
+    color: '#000000',
+    letterSpacing: 0.5,
   },
   tableDescription: {
-    fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.6)',
-    fontWeight: '400',
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.7)',
+    fontWeight: '500',
   },
   emptyState: {
     width: '100%',
@@ -151,7 +168,7 @@ export default StyleSheet.create({
   },
   emptyStateText: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: 'rgba(0, 0, 0, 0.6)',
     textAlign: 'center',
   },
   transactionsList: {
@@ -164,10 +181,24 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: '#000000',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   transactionLeft: {
     flexDirection: 'row',
@@ -199,7 +230,7 @@ export default StyleSheet.create({
   },
   transactionCategory: {
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   transactionValue: {
     fontSize: 16,

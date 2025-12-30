@@ -5,11 +5,11 @@ const PRIMARY_COLOR = '#14ba82';
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: PRIMARY_COLOR,
   },
   contentContainer: {
     paddingTop: 60,
@@ -28,13 +28,15 @@ export default StyleSheet.create({
   headerTitle: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#ffffff',
+    fontStyle: 'italic',
+    color: '#000000',
     lineHeight: 40,
     letterSpacing: -0.5,
   },
   headerSubtitle: {
-    fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.7)',
+    fontWeight: '500',
     lineHeight: 24,
   },
   yearSelector: {
@@ -42,12 +44,26 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: '#000000',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   yearSelectorText: {
     fontSize: 18,
@@ -62,27 +78,25 @@ export default StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
   totalsSection: {
     width: '100%',
-    gap: 12,
   },
   totalsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 12,
+    gap: 0,
   },
-  totalCard: {
-    flex: 1,
-    padding: 18,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 16,
+  groupedTotalsCard: {
+    width: '100%',
+    backgroundColor: '#000000',
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
-    gap: 8,
+    overflow: 'hidden',
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -90,13 +104,38 @@ export default StyleSheet.create({
           width: 0,
           height: 2,
         },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
       },
       android: {
         elevation: 2,
       },
     }),
+  },
+  totalCard: {
+    flex: 1,
+    padding: 18,
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
+    borderColor: 'transparent',
+    gap: 8,
+    borderRightWidth: 1,
+    borderRightColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  totalCardLast: {
+    borderRightWidth: 0,
+  },
+  totalCardFull: {
+    width: '100%',
+    padding: 18,
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
+    borderColor: 'transparent',
+    gap: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.05)',
   },
   totalCardHeader: {
     flexDirection: 'row',
@@ -124,17 +163,31 @@ export default StyleSheet.create({
   },
   chartContainer: {
     width: '100%',
-    marginTop: 8,
+    marginTop: 20,
     padding: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 16,
+    backgroundColor: '#000000',
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.1)',
     minHeight: 300,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   chartPlaceholder: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.5)',
+    color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
   },
   chartContent: {
@@ -142,9 +195,11 @@ export default StyleSheet.create({
     gap: 16,
   },
   chartTitle: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: '600',
+    fontStyle: 'italic',
     color: '#ffffff',
+    letterSpacing: 0.5,
     textAlign: 'center',
     marginBottom: 8,
   },

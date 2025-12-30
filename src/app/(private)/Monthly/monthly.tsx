@@ -134,15 +134,15 @@ export default function Monthly({ onNavigate, onLogout }: MonthlyProps) {
               </View>
             </View>
 
-            <View style={styles.totalCard}>
-              <View style={styles.totalCardHeader}>
-                <Feather name="dollar-sign" size={16} color="#ffffff" />
-                <Text style={styles.totalCardTitle}>Saldo</Text>
+              <View style={styles.totalCard}>
+                <View style={styles.totalCardHeader}>
+                  <Feather name="dollar-sign" size={16} color="#ffffff" />
+                  <Text style={styles.totalCardTitle}>Saldo</Text>
+                </View>
+                <Text style={[styles.totalCardValue, styles.saldoValue]}>
+                  {formatCurrency(totals.saldo)}
+                </Text>
               </View>
-              <Text style={[styles.totalCardValue, styles.saldoValue]}>
-                {formatCurrency(totals.saldo)}
-              </Text>
-            </View>
           </View>
 
           <View style={styles.tableSection}>

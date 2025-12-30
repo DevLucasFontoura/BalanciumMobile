@@ -86,36 +86,38 @@ export default function Dashboard({ onNavigate, onLogout }: DashboardProps) {
           </View>
 
           <View style={styles.totalsSection}>
-            <View style={styles.totalsRow}>
-              <View style={styles.totalCard}>
-                <View style={styles.totalCardHeader}>
-                  <Feather name="arrow-up" size={16} color="#14ba82" />
-                  <Text style={styles.totalCardTitle}>Total Entradas</Text>
+            <View style={styles.groupedTotalsCard}>
+              <View style={styles.totalsRow}>
+                <View style={styles.totalCard}>
+                  <View style={styles.totalCardHeader}>
+                    <Feather name="arrow-up" size={16} color="#14ba82" />
+                    <Text style={styles.totalCardTitle}>Total Entradas</Text>
+                  </View>
+                  <Text style={[styles.totalCardValue, styles.entradaValue]}>
+                    {formatCurrency(yearTotals.entradas)}
+                  </Text>
                 </View>
-                <Text style={[styles.totalCardValue, styles.entradaValue]}>
-                  {formatCurrency(yearTotals.entradas)}
-                </Text>
+
+                <View style={[styles.totalCard, styles.totalCardLast]}>
+                  <View style={styles.totalCardHeader}>
+                    <Feather name="arrow-down" size={16} color="#ff4444" />
+                    <Text style={styles.totalCardTitle}>Total Saídas</Text>
+                  </View>
+                  <Text style={[styles.totalCardValue, styles.saidaValue]}>
+                    {formatCurrency(yearTotals.saidas)}
+                  </Text>
+                </View>
               </View>
 
-              <View style={styles.totalCard}>
+              <View style={styles.totalCardFull}>
                 <View style={styles.totalCardHeader}>
-                  <Feather name="arrow-down" size={16} color="#ff4444" />
-                  <Text style={styles.totalCardTitle}>Total Saídas</Text>
+                  <Feather name="dollar-sign" size={16} color="#ffffff" />
+                  <Text style={styles.totalCardTitle}>Saldo Total</Text>
                 </View>
-                <Text style={[styles.totalCardValue, styles.saidaValue]}>
-                  {formatCurrency(yearTotals.saidas)}
+                <Text style={[styles.totalCardValue, styles.saldoValue]}>
+                  {formatCurrency(yearTotals.saldo)}
                 </Text>
               </View>
-            </View>
-
-            <View style={styles.totalCard}>
-              <View style={styles.totalCardHeader}>
-                <Feather name="dollar-sign" size={16} color="#ffffff" />
-                <Text style={styles.totalCardTitle}>Saldo Total</Text>
-              </View>
-              <Text style={[styles.totalCardValue, styles.saldoValue]}>
-                {formatCurrency(yearTotals.saldo)}
-              </Text>
             </View>
           </View>
 
