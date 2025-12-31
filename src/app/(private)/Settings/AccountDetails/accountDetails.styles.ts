@@ -1,141 +1,109 @@
-import { StyleSheet, Platform } from 'react-native';
-
-const PRIMARY_COLOR = '#14ba82';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#000',
   },
   container: {
     flex: 1,
-    backgroundColor: '#000',
+  },
+  animatedContainer: {
+    flex: 1,
   },
   contentContainer: {
+    flexGrow: 1,
     paddingTop: 60,
     paddingBottom: 100,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   content: {
     width: '100%',
-    gap: 24,
+    alignItems: 'center',
+    gap: 16,
   },
-  headerSection: {
-    width: '100%',
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  headerLeft: {
-    flex: 1,
-    gap: 8,
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#ffffff',
-    lineHeight: 40,
-    letterSpacing: -0.5,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.6)',
-    lineHeight: 24,
+    marginBottom: 20,
+    width: '100%',
   },
   backButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16,
   },
-  formContainer: {
-    width: '100%',
-    gap: 24,
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: '400',
+    letterSpacing: -0.3,
+    lineHeight: 32,
   },
-  inputGroup: {
+  profileSection: {
     width: '100%',
+    alignItems: 'center',
     gap: 12,
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#ffffff',
-    opacity: 0.9,
+  profileImageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginBottom: 4,
   },
-  input: {
+  profileImage: {
     width: '100%',
-    height: 56,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 12,
-    paddingHorizontal: 20,
-    fontSize: 16,
-    color: '#ffffff',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    height: '100%',
   },
-  inputDisabled: {
-    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-    borderColor: 'rgba(255, 255, 255, 0.05)',
-    color: 'rgba(255, 255, 255, 0.5)',
-    opacity: 0.7,
+  profileName: {
+    fontSize: 24,
+    fontWeight: '700',
+    textAlign: 'center',
   },
-  helpText: {
-    fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.5)',
+  profileEmail: {
+    fontSize: 15,
+    textAlign: 'center',
+  },
+  sectionTitle: {
+    width: '100%',
+    paddingHorizontal: 4,
     marginTop: 4,
-    lineHeight: 18,
+    marginBottom: 4,
   },
-  actionsContainer: {
+  sectionTitleText: {
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  groupedCard: {
+    width: '100%',
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+  settingsRow: {
     width: '100%',
     flexDirection: 'row',
-    gap: 12,
-    marginTop: 8,
-  },
-  cancelButton: {
-    flex: 1,
-    height: 56,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    gap: 16,
   },
-  cancelButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
-  saveButton: {
+  rowContent: {
     flex: 1,
-    height: 56,
-    backgroundColor: PRIMARY_COLOR,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    ...Platform.select({
-      ios: {
-        shadowColor: PRIMARY_COLOR,
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    gap: 2,
   },
-  saveButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
+  rowTitle: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  rowValue: {
+    fontSize: 13,
+    fontWeight: '400',
   },
 });
 

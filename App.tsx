@@ -11,10 +11,11 @@ import Monthly from './src/app/(private)/Monthly';
 import Dashboard from './src/app/(private)/Dashboard';
 import AccountDetails from './src/app/(private)/Settings/AccountDetails';
 import NewTransition from './src/app/(private)/NewTransition';
+import Theme from './src/app/(private)/Settings/Theme';
 
-type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'monthly' | 'account-details' | 'new-transition';
+type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'monthly' | 'account-details' | 'new-transition' | 'theme';
 
-const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details', 'new-transition'];
+const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details', 'new-transition', 'theme'];
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -102,6 +103,10 @@ export default function App() {
             console.log('Transação salva:', transaction);
             setCurrentScreen('welcome');
           }}
+        />
+      ) : currentScreen === 'theme' ? (
+        <Theme 
+          onGoBack={() => setCurrentScreen('settings')}
         />
       ) : (
         <Welcome onNavigate={handleNavigate} onLogout={handleLogout} />

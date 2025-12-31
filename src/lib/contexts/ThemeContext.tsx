@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Appearance, ColorSchemeName } from 'react-native';
 import { Theme, ThemeColors, lightTheme, darkTheme } from '../types/theme';
 
 // AsyncStorage será importado dinamicamente se disponível
@@ -26,10 +27,18 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>('light');
+  const [systemColorScheme, setSystemColorScheme] = useState<ColorSchemeName>(Appearance.getColorScheme());
 
   useEffect(() => {
     // Carregar tema salvo
     loadTheme();
+    
+    // Listener para mudanças no tema do sistema
+    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      setSystemColorScheme(colorScheme);
+    });
+
+    return () => subscription.remove();
   }, []);
 
   const loadTheme = async () => {
@@ -40,8 +49,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
     try {
       const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
-      if (savedTheme === 'light' || savedTheme === 'dark') {
-        setThemeState(savedTheme);
+      if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
+        setThemeState(savedTheme as Theme);
       } else {
         // Se não houver tema salvo, inicia no tema claro
         setThemeState('light');
@@ -69,7 +78,16 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     setTheme(newTheme);
   };
 
-  const colors = theme === 'light' ? lightTheme : darkTheme;
+  // Determina o tema efetivo baseado na configuração
+  const getEffectiveTheme = (): 'light' | 'dark' => {
+    if (theme === 'system') {
+      return systemColorScheme === 'dark' ? 'dark' : 'light';
+    }
+    return theme;
+  };
+
+  const effectiveTheme = getEffectiveTheme();
+  const colors = effectiveTheme === 'light' ? lightTheme : darkTheme;
 
   return (
     <ThemeContext.Provider value={{ theme, colors, toggleTheme, setTheme }}>

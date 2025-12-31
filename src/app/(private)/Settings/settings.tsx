@@ -47,10 +47,9 @@ export default function Settings({ currentPlan = 'Básico', currentScreen = 'set
     {
       id: 'theme',
       title: 'Tema',
-      icon: theme === 'light' ? 'sun' : 'moon',
+      icon: theme === 'light' ? 'sun' : theme === 'dark' ? 'moon' : 'monitor',
       iconColor: '#ffc107',
       locked: false,
-      action: toggleTheme,
     },
     {
       id: 'subscription',
@@ -100,6 +99,10 @@ export default function Settings({ currentPlan = 'Básico', currentScreen = 'set
     if (sectionId === 'account') {
       if (onNavigate) {
         onNavigate('account-details');
+      }
+    } else if (sectionId === 'theme') {
+      if (onNavigate) {
+        onNavigate('theme');
       }
     } else if (action) {
       action();
@@ -171,7 +174,7 @@ export default function Settings({ currentPlan = 'Básico', currentScreen = 'set
                   />
                   <Text style={[dynamicStyles.rowTitle, isLocked && styles.lockedTitle]}>
                     {section.title}
-                    {section.id === 'theme' && ` (${theme === 'light' ? 'Claro' : 'Escuro'})`}
+                    {section.id === 'theme' && ` (${theme === 'light' ? 'Claro' : theme === 'dark' ? 'Escuro' : 'Sistema'})`}
                   </Text>
                   {isLocked && (
                     <Text style={styles.upgradeBadge}>UPGRADE</Text>
