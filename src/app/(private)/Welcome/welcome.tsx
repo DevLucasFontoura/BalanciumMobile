@@ -16,7 +16,6 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
   const currentYear = new Date().getFullYear();
 
   // Estilos dinâmicos baseados no tema
-  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
   const cardShadow = theme === 'light' ? {
     ...Platform.select({
       ios: {
@@ -41,27 +40,23 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     userNameText: [styles.userNameText, { color: colors.text }],
     notificationButton: [
       styles.notificationButton,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     balanceLabel: [styles.balanceLabel, { color: colors.textSecondary }],
     balanceCard: [
       styles.balanceCard,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     balanceValue: [styles.balanceValue, { color: colors.text }],
     addButton: [
       styles.addButton,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     sectionTitle: [styles.sectionTitle, { color: colors.text }],
     sectionDescription: [styles.sectionDescription, { color: colors.textSecondary }],
     card: [
       styles.card,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     cardTitle: [styles.cardTitle, { color: colors.text }],
     notificationBadge: [styles.notificationBadge, { borderColor: colors.background }],

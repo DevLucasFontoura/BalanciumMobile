@@ -45,22 +45,7 @@ export default StyleSheet.create({
     marginTop: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: 12,
-    borderWidth: 1.5,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    borderRadius: 16,
   },
   yearSelectorText: {
     fontSize: 18,
@@ -88,23 +73,8 @@ export default StyleSheet.create({
   },
   groupedTotalsCard: {
     width: '100%',
-    borderRadius: 12,
-    borderWidth: 1.5,
+    borderRadius: 16,
     overflow: 'hidden',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
   },
   totalCard: {
     flex: 1,
@@ -158,23 +128,8 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: 20,
     padding: 20,
-    borderRadius: 12,
-    borderWidth: 1.5,
+    borderRadius: 16,
     minHeight: 300,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
   },
   chartPlaceholder: {
     fontSize: 16,

@@ -32,7 +32,6 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     borderRadius: 16,
-    borderWidth: 1.5,
     padding: 6,
     gap: 6,
   },
@@ -62,7 +61,6 @@ export default StyleSheet.create({
   formCard: {
     width: '100%',
     borderRadius: 16,
-    borderWidth: 1.5,
     padding: 24,
     gap: 24,
   },

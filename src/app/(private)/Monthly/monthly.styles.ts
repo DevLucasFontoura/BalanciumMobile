@@ -48,6 +48,12 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 16,
   },
+  totalCard: {
+    flex: 1,
+    padding: 20,
+    borderRadius: 16,
+    gap: 10,
+  },
   monthSelectorText: {
     fontSize: 18,
     fontWeight: '600',
@@ -73,12 +79,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 12,
-  },
-  totalCard: {
-    flex: 1,
-    padding: 20,
-    borderRadius: 16,
-    gap: 10,
   },
   totalCardHeader: {
     flexDirection: 'row',
@@ -135,17 +135,20 @@ export default StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.6)',
     textAlign: 'center',
   },
-  transactionsList: {
+  groupedTransactionsCard: {
     width: '100%',
-    gap: 12,
+    borderRadius: 16,
+    overflow: 'hidden',
     marginTop: 8,
   },
-  transactionItem: {
+  transactionRow: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
-    borderRadius: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    gap: 16,
   },
   transactionLeft: {
     flexDirection: 'row',
@@ -166,17 +169,10 @@ export default StyleSheet.create({
   transactionIconSaida: {
     backgroundColor: 'rgba(255, 68, 68, 0.2)',
   },
-  transactionInfo: {
-    flex: 1,
-    gap: 4,
-  },
   transactionDescription: {
     fontSize: 16,
     fontWeight: '600',
-  },
-  transactionCategory: {
-    fontSize: 12,
-    fontWeight: '400',
+    flex: 1,
   },
   transactionValue: {
     fontSize: 16,
@@ -187,6 +183,64 @@ export default StyleSheet.create({
   },
   transactionValueSaida: {
     color: '#ff4444',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  transactionModalContainer: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingBottom: Platform.OS === 'ios' ? 40 : 20,
+    maxHeight: '60%',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: -2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 10,
+      },
+      android: {
+        elevation: 10,
+      },
+    }),
+  },
+  transactionModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+  },
+  transactionModalCloseButton: {
+    padding: 4,
+  },
+  transactionModalContent: {
+    padding: 20,
+    gap: 20,
+  },
+  transactionModalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  transactionModalLabel: {
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  transactionModalDetail: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  transactionModalValue: {
+    fontSize: 20,
+    fontWeight: '700',
   },
 });
 

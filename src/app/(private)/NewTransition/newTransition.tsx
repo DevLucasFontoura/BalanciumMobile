@@ -22,7 +22,6 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
   const [pickerModalVisible, setPickerModalVisible] = useState(false);
 
   // Estilos dinâmicos baseados no tema
-  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
   const inputBorderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.15)';
   const cardShadow = theme === 'light' ? {
     ...Platform.select({
@@ -47,13 +46,11 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
     pageTitle: [styles.pageTitle, { color: colors.text }],
     typeSelectorCard: [
       styles.typeSelectorCard,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     formCard: [
       styles.formCard,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     inputLabel: [styles.inputLabel, { color: colors.textSecondary }],
     inputContainer: [
@@ -77,7 +74,7 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
     ],
     pickerButtonText: [styles.pickerButtonText, { color: colors.text }],
     pickerModalContainer: [styles.pickerModalContainer, { backgroundColor: colors.surface }],
-    pickerModalHeader: [styles.pickerModalHeader, { borderBottomColor: inputBorderColor }],
+    pickerModalHeader: [styles.pickerModalHeader, { borderBottomColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)' }],
   };
 
   const categories = [

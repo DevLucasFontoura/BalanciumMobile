@@ -46,7 +46,6 @@ export default StyleSheet.create({
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1.5,
     position: 'relative',
   },
   notificationBadge: {
@@ -75,7 +74,6 @@ export default StyleSheet.create({
     width: '100%',
     padding: 24,
     borderRadius: 16,
-    borderWidth: 1.5,
     position: 'relative',
   },
   balanceValue: {
@@ -90,7 +88,6 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -124,7 +121,6 @@ export default StyleSheet.create({
     width: '100%',
     padding: 18,
     borderRadius: 16,
-    borderWidth: 1.5,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,

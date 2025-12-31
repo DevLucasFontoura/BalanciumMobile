@@ -17,7 +17,6 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
 
   // Estilos dinâmicos baseados no tema
-  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
   const cardShadow = theme === 'light' ? {
     ...Platform.select({
       ios: {
@@ -42,21 +41,18 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
     headerSubtitle: [styles.headerSubtitle, { color: colors.textSecondary }],
     yearSelector: [
       styles.yearSelector,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     yearSelectorText: [styles.yearSelectorText, { color: colors.text }],
     groupedTotalsCard: [
       styles.groupedTotalsCard,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     totalCardTitle: [styles.totalCardTitle, { color: colors.textSecondary }],
     saldoValue: [styles.totalCardValue, styles.saldoValue, { color: colors.text }],
     chartContainer: [
       styles.chartContainer,
-      { backgroundColor: colors.surface, borderColor },
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     chartTitle: [styles.chartTitle, { color: colors.text }],
     chartPlaceholder: [styles.chartPlaceholder, { color: colors.textSecondary }],

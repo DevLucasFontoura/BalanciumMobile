@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Platform, Modal } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
@@ -32,9 +32,9 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
   const [selectedMonthIndex, setSelectedMonthIndex] = useState(currentDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
   const selectedMonth = monthNames[selectedMonthIndex];
+  const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
   // Estilos dinâmicos baseados no tema
-  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
   const cardShadow = theme === 'light' ? {
     ...Platform.select({
       ios: {
@@ -58,27 +58,29 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
     headerTitle: [styles.headerTitle, { color: colors.text }],
     monthSelector: [
       styles.monthSelector, 
-      { backgroundColor: colors.surface, borderWidth: 1.5, borderColor }, 
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     monthSelectorText: [styles.monthSelectorText, { color: colors.text }],
     totalCard: [
       styles.totalCard, 
-      { backgroundColor: colors.surface, borderWidth: 1.5, borderColor }, 
-      cardShadow
+      { backgroundColor: colors.surface }
     ],
     totalCardTitle: [styles.totalCardTitle, { color: colors.textSecondary }],
     saldoValue: [styles.totalCardValue, styles.saldoValue, { color: colors.text }],
     tableTitle: [styles.tableTitle, { color: colors.text }],
     tableDescription: [styles.tableDescription, { color: colors.textSecondary }],
-    transactionItem: [
-      styles.transactionItem, 
-      { backgroundColor: colors.surface, borderWidth: 1.5, borderColor }, 
+    groupedTransactionsCard: [
+      styles.groupedTransactionsCard,
+      { backgroundColor: colors.surface },
       cardShadow
     ],
     transactionDescription: [styles.transactionDescription, { color: colors.text }],
-    transactionCategory: [styles.transactionCategory, { color: colors.textSecondary }],
     emptyStateText: [styles.emptyStateText, { color: colors.textSecondary }],
+    transactionModalContainer: [styles.transactionModalContainer, { backgroundColor: colors.surface }],
+    transactionModalHeader: [styles.transactionModalHeader, { borderBottomColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)' }],
+    transactionModalDetail: [styles.transactionModalDetail, { color: colors.text }],
+    transactionModalLabel: [styles.transactionModalLabel, { color: colors.textSecondary }],
+    transactionModalValue: [styles.transactionModalValue, { color: colors.text }],
   };
 
   // Dados fake para visualização
@@ -166,7 +168,7 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
                   <Feather name="arrow-up" size={18} color={colors.primary} />
                   <Text style={dynamicStyles.totalCardTitle}>Entradas</Text>
                 </View>
-                <Text style={[styles.totalCardValue, styles.entradaValue]}>
+                <Text style={[styles.totalCardValue, styles.transactionValueEntrada]}>
                   {formatCurrency(totals.totalEntrada)}
                 </Text>
               </View>
@@ -176,7 +178,7 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
                   <Feather name="arrow-down" size={18} color="#ff4444" />
                   <Text style={dynamicStyles.totalCardTitle}>Saídas</Text>
                 </View>
-                <Text style={[styles.totalCardValue, styles.saidaValue]}>
+                <Text style={[styles.totalCardValue, styles.transactionValueSaida]}>
                   {formatCurrency(totals.totalSaida)}
                 </Text>
               </View>
@@ -212,38 +214,111 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
                 </Text>
               </View>
             ) : (
-              <View style={styles.transactionsList}>
-                {transactions.map((transaction) => (
-                  <View key={transaction.id} style={dynamicStyles.transactionItem}>
-                    <View style={styles.transactionLeft}>
-                      <View style={[
-                        styles.transactionIcon,
-                        transaction.type === 'entrada' ? styles.transactionIconEntrada : styles.transactionIconSaida
-                      ]}>
-                        <Feather
-                          name={transaction.type === 'entrada' ? 'arrow-up' : 'arrow-down'}
-                          size={18}
-                          color={transaction.type === 'entrada' ? colors.primary : '#ff4444'}
-                        />
-                      </View>
-                      <View style={styles.transactionInfo}>
+              <View style={dynamicStyles.groupedTransactionsCard}>
+                {transactions.map((transaction, index) => {
+                  const isLast = index === transactions.length - 1;
+                  const rowStyle = [
+                    styles.transactionRow,
+                    { backgroundColor: colors.surface },
+                    !isLast && { borderBottomWidth: 1, borderBottomColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)' },
+                  ];
+                  return (
+                    <TouchableOpacity
+                      key={transaction.id}
+                      style={rowStyle}
+                      onPress={() => setSelectedTransaction(transaction)}
+                      activeOpacity={0.7}
+                    >
+                      <View style={styles.transactionLeft}>
+                        <View style={[
+                          styles.transactionIcon,
+                          transaction.type === 'entrada' ? styles.transactionIconEntrada : styles.transactionIconSaida
+                        ]}>
+                          <Feather
+                            name={transaction.type === 'entrada' ? 'arrow-up' : 'arrow-down'}
+                            size={18}
+                            color={transaction.type === 'entrada' ? colors.primary : '#ff4444'}
+                          />
+                        </View>
                         <Text style={dynamicStyles.transactionDescription}>{transaction.description}</Text>
-                        <Text style={dynamicStyles.transactionCategory}>{transaction.category} • {transaction.date}</Text>
                       </View>
-                    </View>
-                    <Text style={[
-                      styles.transactionValue,
-                      transaction.type === 'entrada' ? styles.transactionValueEntrada : styles.transactionValueSaida
-                    ]}>
-                      {transaction.type === 'entrada' ? '+' : '-'} {formatCurrency(Math.abs(transaction.value))}
-                    </Text>
-                  </View>
-                ))}
+                      <Text style={[
+                        styles.transactionValue,
+                        transaction.type === 'entrada' ? styles.transactionValueEntrada : styles.transactionValueSaida
+                      ]}>
+                        {transaction.type === 'entrada' ? '+' : '-'} {formatCurrency(Math.abs(transaction.value))}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             )}
           </View>
         </View>
       </ScrollView>
+
+      {/* Transaction Detail Modal */}
+      <Modal
+        visible={selectedTransaction !== null}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setSelectedTransaction(null)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={dynamicStyles.transactionModalContainer}>
+            <View style={dynamicStyles.transactionModalHeader}>
+              <Text style={dynamicStyles.transactionDescription}>
+                {selectedTransaction?.description || ''}
+              </Text>
+              <TouchableOpacity
+                onPress={() => setSelectedTransaction(null)}
+                style={styles.transactionModalCloseButton}
+              >
+                <Feather name="x" size={24} color={colors.text} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.transactionModalContent}>
+              <View style={styles.transactionModalRow}>
+                <Text style={dynamicStyles.transactionModalLabel}>Valor</Text>
+                <Text style={[
+                  dynamicStyles.transactionModalValue,
+                  selectedTransaction?.type === 'entrada' ? styles.transactionValueEntrada : styles.transactionValueSaida
+                ]}>
+                  {selectedTransaction ? (
+                    `${selectedTransaction.type === 'entrada' ? '+' : '-'} ${formatCurrency(Math.abs(selectedTransaction.value))}`
+                  ) : ''}
+                </Text>
+              </View>
+
+              <View style={styles.transactionModalRow}>
+                <Text style={dynamicStyles.transactionModalLabel}>Categoria</Text>
+                <Text style={dynamicStyles.transactionModalDetail}>
+                  {selectedTransaction?.category || ''}
+                </Text>
+              </View>
+
+              <View style={styles.transactionModalRow}>
+                <Text style={dynamicStyles.transactionModalLabel}>Data</Text>
+                <Text style={dynamicStyles.transactionModalDetail}>
+                  {selectedTransaction?.date || ''}
+                </Text>
+              </View>
+
+              <View style={styles.transactionModalRow}>
+                <Text style={dynamicStyles.transactionModalLabel}>Tipo</Text>
+                <Text style={[
+                  dynamicStyles.transactionModalDetail,
+                  selectedTransaction?.type === 'entrada' ? { color: colors.primary } : { color: '#ff4444' }
+                ]}>
+                  {selectedTransaction?.type === 'entrada' ? 'Entrada' : 'Saída'}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       <Menu currentScreen={currentScreen} onNavigate={onNavigate} />
     </View>
   );
