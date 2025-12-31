@@ -28,7 +28,6 @@ export default StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#000000',
     lineHeight: 36,
     letterSpacing: -0.5,
     ...Platform.select({
@@ -48,7 +47,6 @@ export default StyleSheet.create({
   },
   headerSubtitle: {
     fontSize: 15,
-    color: 'rgba(0, 0, 0, 0.65)',
     fontWeight: '400',
     lineHeight: 24,
     letterSpacing: 0.2,
@@ -60,10 +58,8 @@ export default StyleSheet.create({
     marginTop: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
-    backgroundColor: '#000000',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderWidth: 1.5,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -82,7 +78,6 @@ export default StyleSheet.create({
   yearSelectorText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#ffffff',
   },
   yearSelectorButtons: {
     flexDirection: 'row',
@@ -106,10 +101,8 @@ export default StyleSheet.create({
   },
   groupedTotalsCard: {
     width: '100%',
-    backgroundColor: '#000000',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderWidth: 1.5,
     overflow: 'hidden',
     ...Platform.select({
       ios: {
@@ -159,7 +152,6 @@ export default StyleSheet.create({
   totalCardTitle: {
     fontSize: 14,
     fontWeight: '500',
-    color: 'rgba(255, 255, 255, 0.7)',
   },
   totalCardValue: {
     fontSize: 22,
@@ -173,16 +165,14 @@ export default StyleSheet.create({
     color: '#ff4444',
   },
   saldoValue: {
-    color: '#ffffff',
+    // Cor será definida dinamicamente no componente
   },
   chartContainer: {
     width: '100%',
     marginTop: 20,
     padding: 20,
-    backgroundColor: '#000000',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderWidth: 1.5,
     minHeight: 300,
     ...Platform.select({
       ios: {
@@ -201,7 +191,6 @@ export default StyleSheet.create({
   },
   chartPlaceholder: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
   },
   chartContent: {
@@ -211,7 +200,6 @@ export default StyleSheet.create({
   chartTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#ffffff',
     letterSpacing: 0.3,
     textAlign: 'center',
     marginBottom: 8,
@@ -249,7 +237,6 @@ export default StyleSheet.create({
   },
   monthLabel: {
     fontSize: 10,
-    color: 'rgba(255, 255, 255, 0.6)',
     fontWeight: '500',
   },
   chartLegend: {
@@ -276,7 +263,6 @@ export default StyleSheet.create({
   },
   legendText: {
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.7)',
   },
 });
 

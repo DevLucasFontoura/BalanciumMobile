@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
+import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './dashboard.styles';
 
 interface DashboardProps {
@@ -11,8 +12,57 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onLogout }: DashboardProps) {
+  const { theme, colors } = useTheme();
   const currentDate = new Date();
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
+
+  // Estilos dinâmicos baseados no tema
+  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
+  const cardShadow = theme === 'light' ? {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  } : {};
+
+  const dynamicStyles = {
+    wrapper: [styles.wrapper, { backgroundColor: colors.background }],
+    container: [styles.container, { backgroundColor: colors.background }],
+    headerTitle: [styles.headerTitle, { color: colors.text }],
+    headerSubtitle: [styles.headerSubtitle, { color: colors.textSecondary }],
+    yearSelector: [
+      styles.yearSelector,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    yearSelectorText: [styles.yearSelectorText, { color: colors.text }],
+    groupedTotalsCard: [
+      styles.groupedTotalsCard,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    totalCardTitle: [styles.totalCardTitle, { color: colors.textSecondary }],
+    saldoValue: [styles.totalCardValue, styles.saldoValue, { color: colors.text }],
+    chartContainer: [
+      styles.chartContainer,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    chartTitle: [styles.chartTitle, { color: colors.text }],
+    chartPlaceholder: [styles.chartPlaceholder, { color: colors.textSecondary }],
+    legendText: [styles.legendText, { color: colors.textSecondary }],
+    monthLabel: [styles.monthLabel, { color: colors.textSecondary }],
+  };
 
   // Dados fake para visualização
   const yearTotals = {
@@ -54,45 +104,48 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View style={dynamicStyles.wrapper}>
       <ScrollView
-        style={styles.container}
+        style={dynamicStyles.container}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.content}>
           <View style={styles.headerSection}>
-            <Text style={styles.headerTitle}>Dashboard</Text>
-            <Text style={styles.headerSubtitle}>
+            <Text style={dynamicStyles.headerTitle}>Dashboard</Text>
+            <Text style={dynamicStyles.headerSubtitle}>
               Visualização de gráficos e análises financeiras em tempo real
             </Text>
 
-            <View style={styles.yearSelector}>
+            <View style={dynamicStyles.yearSelector}>
               <TouchableOpacity
                 style={styles.yearButton}
                 onPress={() => handleYearChange('prev')}
                 activeOpacity={0.7}
               >
-                <Feather name="chevron-left" size={20} color="#ffffff" />
+                <Feather name="chevron-left" size={20} color={colors.text} />
               </TouchableOpacity>
-              <Text style={styles.yearSelectorText}>{selectedYear}</Text>
+              <Text style={dynamicStyles.yearSelectorText}>{selectedYear}</Text>
               <TouchableOpacity
                 style={styles.yearButton}
                 onPress={() => handleYearChange('next')}
                 activeOpacity={0.7}
               >
-                <Feather name="chevron-right" size={20} color="#ffffff" />
+                <Feather name="chevron-right" size={20} color={colors.text} />
               </TouchableOpacity>
             </View>
           </View>
 
           <View style={styles.totalsSection}>
-            <View style={styles.groupedTotalsCard}>
+            <View style={dynamicStyles.groupedTotalsCard}>
               <View style={styles.totalsRow}>
-                <View style={styles.totalCard}>
+                <View style={[
+                  styles.totalCard,
+                  { borderRightColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.05)' }
+                ]}>
                   <View style={styles.totalCardHeader}>
-                    <Feather name="arrow-up" size={16} color="#14ba82" />
-                    <Text style={styles.totalCardTitle}>Total Entradas</Text>
+                    <Feather name="arrow-up" size={16} color={colors.primary} />
+                    <Text style={dynamicStyles.totalCardTitle}>Total Entradas</Text>
                   </View>
                   <Text style={[styles.totalCardValue, styles.entradaValue]}>
                     {formatCurrency(yearTotals.entradas)}
@@ -102,7 +155,7 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
                 <View style={[styles.totalCard, styles.totalCardLast]}>
                   <View style={styles.totalCardHeader}>
                     <Feather name="arrow-down" size={16} color="#ff4444" />
-                    <Text style={styles.totalCardTitle}>Total Saídas</Text>
+                    <Text style={dynamicStyles.totalCardTitle}>Total Saídas</Text>
                   </View>
                   <Text style={[styles.totalCardValue, styles.saidaValue]}>
                     {formatCurrency(yearTotals.saidas)}
@@ -110,24 +163,27 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
                 </View>
               </View>
 
-              <View style={styles.totalCardFull}>
+              <View style={[
+                styles.totalCardFull,
+                { borderTopColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.05)' }
+              ]}>
                 <View style={styles.totalCardHeader}>
-                  <Feather name="dollar-sign" size={16} color="#ffffff" />
-                  <Text style={styles.totalCardTitle}>Saldo Total</Text>
+                  <Feather name="dollar-sign" size={16} color={colors.text} />
+                  <Text style={dynamicStyles.totalCardTitle}>Saldo Total</Text>
                 </View>
-                <Text style={[styles.totalCardValue, styles.saldoValue]}>
+                <Text style={dynamicStyles.saldoValue}>
                   {formatCurrency(yearTotals.saldo)}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.chartContainer}>
+          <View style={dynamicStyles.chartContainer}>
             {loading ? (
-              <Text style={styles.chartPlaceholder}>Carregando gráfico...</Text>
+              <Text style={dynamicStyles.chartPlaceholder}>Carregando gráfico...</Text>
             ) : (
               <View style={styles.chartContent}>
-                <Text style={styles.chartTitle}>Análise Mensal - {selectedYear}</Text>
+                <Text style={dynamicStyles.chartTitle}>Análise Mensal - {selectedYear}</Text>
                 <View style={styles.monthlyBars}>
                   {monthlyData.map((data, index) => {
                     const maxValue = Math.max(...monthlyData.map(d => Math.max(d.entrada, d.saida)));
@@ -140,7 +196,7 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
                           <View style={[styles.bar, styles.entradaBar, { height: `${entradaHeight}%` }]} />
                           <View style={[styles.bar, styles.saidaBar, { height: `${saidaHeight}%` }]} />
                         </View>
-                        <Text style={styles.monthLabel}>{data.month}</Text>
+                        <Text style={dynamicStyles.monthLabel}>{data.month}</Text>
                       </View>
                     );
                   })}
@@ -148,11 +204,11 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
                 <View style={styles.chartLegend}>
                   <View style={styles.legendItem}>
                     <View style={[styles.legendDot, styles.entradaDot]} />
-                    <Text style={styles.legendText}>Entradas</Text>
+                    <Text style={dynamicStyles.legendText}>Entradas</Text>
                   </View>
                   <View style={styles.legendItem}>
                     <View style={[styles.legendDot, styles.saidaDot]} />
-                    <Text style={styles.legendText}>Saídas</Text>
+                    <Text style={dynamicStyles.legendText}>Saídas</Text>
                   </View>
                 </View>
               </View>
