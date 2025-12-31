@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { ThemeProvider } from './src/lib/contexts/ThemeContext';
 import SplashScreen from './src/components/SplashScreen';
 import Login from './src/app/(public)/Login';
 import Register from './src/app/(public)/Register';
@@ -70,7 +71,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <ThemeProvider>
       {currentScreen === 'login' ? (
         <Login 
           onNavigateToRegister={() => setCurrentScreen('register')}
@@ -105,6 +106,6 @@ export default function App() {
         <Welcome onNavigate={handleNavigate} onLogout={handleLogout} />
       )}
       <StatusBar style="light" />
-    </>
+    </ThemeProvider>
   );
 }

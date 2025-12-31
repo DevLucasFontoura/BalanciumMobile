@@ -5,43 +5,28 @@ const PRIMARY_COLOR = '#14ba82';
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: '#000000',
   },
   container: {
     flex: 1,
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: '#000000',
   },
   contentContainer: {
     flexGrow: 1,
     paddingTop: 60,
     paddingBottom: 100,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   content: {
     width: '100%',
   },
   pageTitle: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: '800',
-    color: '#000000',
-    letterSpacing: -0.5,
+    letterSpacing: -0.8,
     paddingHorizontal: 4,
-    marginBottom: 20,
-    lineHeight: 36,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    marginBottom: 32,
+    lineHeight: 40,
   },
   profileCard: {
     width: '100%',
@@ -49,34 +34,21 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 18,
-    backgroundColor: '#000000',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    marginBottom: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    borderRadius: 16,
+    marginBottom: 24,
   },
   profileImageContainer: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: PRIMARY_COLOR,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
+    overflow: 'hidden',
+  },
+  profileImage: {
+    width: '100%',
+    height: '100%',
   },
   profileInfo: {
     flex: 1,
@@ -85,43 +57,23 @@ export default StyleSheet.create({
   profileName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#ffffff',
   },
   profileSubtitle: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.6)',
+    fontWeight: '400',
   },
   groupedCard: {
     width: '100%',
-    backgroundColor: '#000000',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 16,
     overflow: 'hidden',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
   },
   settingsRow: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.05)',
-    gap: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    gap: 16,
   },
   lastRow: {
     borderBottomWidth: 0,
@@ -169,10 +121,9 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '500',
-    color: '#ffffff',
   },
   lockedTitle: {
-    color: 'rgba(255, 255, 255, 0.5)',
+    opacity: 0.5,
   },
   upgradeBadge: {
     paddingHorizontal: 6,
@@ -196,31 +147,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    paddingVertical: 18,
+    paddingVertical: 16,
     paddingHorizontal: 16,
-    backgroundColor: '#000000',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    borderRadius: 16,
   },
   logoutButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#ffffff',
   },
   versionInfo: {
     flexDirection: 'row',
@@ -231,11 +164,11 @@ export default StyleSheet.create({
   },
   versionLabel: {
     fontSize: 13,
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   versionText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#000000',
+    color: '#ffffff',
   },
 });
