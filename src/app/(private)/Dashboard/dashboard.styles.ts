@@ -26,18 +26,32 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   headerTitle: {
-    fontSize: 32,
-    fontWeight: '700',
-    fontStyle: 'italic',
+    fontSize: 28,
+    fontWeight: '800',
     color: '#000000',
-    lineHeight: 40,
+    lineHeight: 36,
     letterSpacing: -0.5,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   headerSubtitle: {
     fontSize: 15,
-    color: 'rgba(0, 0, 0, 0.7)',
-    fontWeight: '500',
+    color: 'rgba(0, 0, 0, 0.65)',
+    fontWeight: '400',
     lineHeight: 24,
+    letterSpacing: 0.2,
   },
   yearSelector: {
     flexDirection: 'row',
@@ -195,11 +209,10 @@ export default StyleSheet.create({
     gap: 16,
   },
   chartTitle: {
-    fontSize: 26,
-    fontWeight: '600',
-    fontStyle: 'italic',
+    fontSize: 20,
+    fontWeight: '700',
     color: '#ffffff',
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
     textAlign: 'center',
     marginBottom: 8,
   },

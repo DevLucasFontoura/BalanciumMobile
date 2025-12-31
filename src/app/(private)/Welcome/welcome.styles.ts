@@ -30,17 +30,33 @@ export default StyleSheet.create({
   greetingContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
-    gap: 0,
+    gap: 4,
   },
   greetingText: {
-    fontSize: 36,
-    fontWeight: '400',
-    color: '#000000',
+    fontSize: 24,
+    fontWeight: '500',
+    color: 'rgba(0, 0, 0, 0.6)',
+    letterSpacing: 0.3,
   },
   userNameText: {
-    fontSize: 36,
-    fontWeight: '700',
+    fontSize: 32,
+    fontWeight: '800',
     color: '#000000',
+    letterSpacing: -0.5,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   notificationButton: {
     width: 44,
@@ -83,13 +99,13 @@ export default StyleSheet.create({
     gap: 16,
   },
   balanceLabel: {
-    fontSize: 26,
-    fontWeight: '600',
-    fontStyle: 'italic',
-    color: '#000000',
-    letterSpacing: 0.5,
+    fontSize: 18,
+    fontWeight: '500',
+    color: 'rgba(0, 0, 0, 0.7)',
+    letterSpacing: 0.4,
     paddingHorizontal: 4,
-    marginBottom: 8,
+    marginBottom: 4,
+    textTransform: 'uppercase',
   },
   balanceCard: {
     width: '100%',
@@ -157,16 +173,30 @@ export default StyleSheet.create({
     marginBottom: 4,
   },
   sectionTitle: {
-    fontSize: 26,
-    fontWeight: '600',
-    fontStyle: 'italic',
+    fontSize: 28,
+    fontWeight: '800',
     color: '#000000',
-    letterSpacing: 0.5,
+    letterSpacing: -0.5,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   sectionDescription: {
     fontSize: 15,
-    color: 'rgba(0, 0, 0, 0.7)',
-    fontWeight: '500',
+    color: 'rgba(0, 0, 0, 0.65)',
+    fontWeight: '400',
+    letterSpacing: 0.2,
   },
   cardsContainer: {
     width: '100%',

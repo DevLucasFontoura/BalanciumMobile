@@ -23,13 +23,26 @@ export default StyleSheet.create({
     gap: 20,
   },
   pageTitle: {
-    fontSize: 32,
-    fontWeight: '700',
-    fontStyle: 'italic',
+    fontSize: 28,
+    fontWeight: '800',
     color: '#000000',
     letterSpacing: -0.5,
-    lineHeight: 40,
+    lineHeight: 36,
     marginBottom: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   typeSelectorCard: {
     width: '100%',
