@@ -4,11 +4,12 @@ import Menu from '../../../components/Menu';
 import styles from './welcome.styles';
 
 interface WelcomeProps {
+  currentScreen?: string;
   onNavigate?: (screen: string) => void;
   onLogout?: () => void;
 }
 
-export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
+export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogout }: WelcomeProps) {
   const userName = 'Lucas Fontoura'; // TODO: Buscar do contexto/perfil
   const currentYear = new Date().getFullYear();
 
@@ -118,7 +119,7 @@ export default function Welcome({ onNavigate, onLogout }: WelcomeProps) {
           </View>
         </View>
       </ScrollView>
-      <Menu currentScreen="welcome" onNavigate={onNavigate} />
+      <Menu currentScreen={currentScreen} onNavigate={onNavigate} />
     </View>
   );
 }

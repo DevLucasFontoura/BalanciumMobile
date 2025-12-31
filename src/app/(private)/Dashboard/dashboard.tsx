@@ -5,11 +5,12 @@ import Menu from '../../../components/Menu';
 import styles from './dashboard.styles';
 
 interface DashboardProps {
+  currentScreen?: string;
   onNavigate?: (screen: string) => void;
   onLogout?: () => void;
 }
 
-export default function Dashboard({ onNavigate, onLogout }: DashboardProps) {
+export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onLogout }: DashboardProps) {
   const currentDate = new Date();
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
 
@@ -159,7 +160,7 @@ export default function Dashboard({ onNavigate, onLogout }: DashboardProps) {
           </View>
         </View>
       </ScrollView>
-      <Menu currentScreen="dashboard" onNavigate={onNavigate} />
+      <Menu currentScreen={currentScreen} onNavigate={onNavigate} />
     </View>
   );
 }

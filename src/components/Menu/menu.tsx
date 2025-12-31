@@ -51,8 +51,9 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
   };
 
   const handleAddTransaction = () => {
-    // TODO: Implementar navegação para adicionar transação
-    console.log('Adicionar transação');
+    if (onNavigate) {
+      onNavigate('new-transition');
+    }
   };
 
   return (

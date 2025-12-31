@@ -5,11 +5,12 @@ import styles from './settings.styles';
 
 interface SettingsProps {
   currentPlan?: string;
+  currentScreen?: string;
   onNavigate?: (screen: string) => void;
   onLogout?: () => void;
 }
 
-export default function Settings({ currentPlan = 'Básico', onNavigate, onLogout }: SettingsProps) {
+export default function Settings({ currentPlan = 'Básico', currentScreen = 'settings', onNavigate, onLogout }: SettingsProps) {
   const hasCategoriesAccess = currentPlan === 'Plus' || currentPlan === 'Premium';
   const hasDataExportAccess = currentPlan === 'Plus' || currentPlan === 'Premium';
 
@@ -149,7 +150,7 @@ export default function Settings({ currentPlan = 'Básico', onNavigate, onLogout
           </View>
         </View>
       </ScrollView>
-      <Menu currentScreen="settings" onNavigate={onNavigate} />
+      <Menu currentScreen={currentScreen} onNavigate={onNavigate} />
     </View>
   );
 }

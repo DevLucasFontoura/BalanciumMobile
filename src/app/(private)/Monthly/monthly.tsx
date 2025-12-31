@@ -5,6 +5,7 @@ import Menu from '../../../components/Menu';
 import styles from './monthly.styles';
 
 interface MonthlyProps {
+  currentScreen?: string;
   onNavigate?: (screen: string) => void;
   onLogout?: () => void;
 }
@@ -24,7 +25,7 @@ const monthNames = [
   'Dezembro',
 ];
 
-export default function Monthly({ onNavigate, onLogout }: MonthlyProps) {
+export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogout }: MonthlyProps) {
   const currentDate = new Date();
   const [selectedMonthIndex, setSelectedMonthIndex] = useState(currentDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
@@ -196,7 +197,7 @@ export default function Monthly({ onNavigate, onLogout }: MonthlyProps) {
           </View>
         </View>
       </ScrollView>
-      <Menu currentScreen="monthly" onNavigate={onNavigate} />
+      <Menu currentScreen={currentScreen} onNavigate={onNavigate} />
     </View>
   );
 }

@@ -8,10 +8,11 @@ import Settings from './src/app/(private)/Settings';
 import Monthly from './src/app/(private)/Monthly';
 import Dashboard from './src/app/(private)/Dashboard';
 import AccountDetails from './src/app/(private)/Settings/AccountDetails';
+import NewTransition from './src/app/(private)/NewTransition';
 
-type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'monthly' | 'account-details';
+type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'monthly' | 'account-details' | 'new-transition';
 
-const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details'];
+const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details', 'new-transition'];
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -78,18 +79,27 @@ export default function App() {
       ) : currentScreen === 'register' ? (
         <Register onNavigateToLogin={() => setCurrentScreen('login')} />
       ) : currentScreen === 'welcome' ? (
-        <Welcome onNavigate={handleNavigate} onLogout={handleLogout} />
+        <Welcome currentScreen={currentScreen} onNavigate={handleNavigate} onLogout={handleLogout} />
       ) : currentScreen === 'settings' ? (
-        <Settings onNavigate={handleNavigate} onLogout={handleLogout} />
+        <Settings currentScreen={currentScreen} onNavigate={handleNavigate} onLogout={handleLogout} />
       ) : currentScreen === 'monthly' ? (
-        <Monthly onNavigate={handleNavigate} onLogout={handleLogout} />
+        <Monthly currentScreen={currentScreen} onNavigate={handleNavigate} onLogout={handleLogout} />
       ) : currentScreen === 'dashboard' ? (
-        <Dashboard onNavigate={handleNavigate} onLogout={handleLogout} />
+        <Dashboard currentScreen={currentScreen} onNavigate={handleNavigate} onLogout={handleLogout} />
       ) : currentScreen === 'account-details' ? (
         <AccountDetails 
           onNavigate={handleNavigate} 
           onLogout={handleLogout}
           onGoBack={() => setCurrentScreen('settings')}
+        />
+      ) : currentScreen === 'new-transition' ? (
+        <NewTransition 
+          onNavigate={handleNavigate}
+          onGoBack={() => setCurrentScreen('welcome')}
+          onSave={(transaction) => {
+            console.log('Transação salva:', transaction);
+            setCurrentScreen('welcome');
+          }}
         />
       ) : (
         <Welcome onNavigate={handleNavigate} onLogout={handleLogout} />
