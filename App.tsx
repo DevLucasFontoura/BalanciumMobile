@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from './src/lib/contexts/ThemeContext';
+import StatusBarWrapper from './src/components/StatusBarWrapper';
 import SplashScreen from './src/components/SplashScreen';
 import Login from './src/app/(public)/Login';
 import Register from './src/app/(public)/Register';
@@ -105,7 +106,7 @@ export default function App() {
       ) : (
         <Welcome onNavigate={handleNavigate} onLogout={handleLogout} />
       )}
-      <StatusBar style="light" />
+      <StatusBarWrapper />
     </ThemeProvider>
   );
 }
