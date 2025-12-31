@@ -66,6 +66,11 @@ export default StyleSheet.create({
     minHeight: 48,
     borderRadius: 20,
   },
+  addButtonActive: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderWidth: 0.5,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
   menuLabel: {
     fontSize: 11,
     fontWeight: '500',

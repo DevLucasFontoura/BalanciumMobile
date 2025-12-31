@@ -70,11 +70,15 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
           ))}
           
           <TouchableOpacity
-            style={styles.addButton}
+            style={[styles.addButton, currentScreen === 'new-transition' && styles.addButtonActive]}
             onPress={handleAddTransaction}
             activeOpacity={0.7}
           >
-            <Feather name="plus" size={24} color="rgba(255, 255, 255, 0.6)" />
+            <Feather 
+              name="plus" 
+              size={24} 
+              color={currentScreen === 'new-transition' ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'} 
+            />
           </TouchableOpacity>
 
           {menuItems.slice(2).map((item) => (
