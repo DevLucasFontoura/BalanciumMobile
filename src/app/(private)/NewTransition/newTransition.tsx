@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, Modal } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
@@ -14,12 +15,20 @@ interface NewTransitionProps {
 
 export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTransitionProps) {
   const { theme, colors } = useTheme();
-  const [type, setType] = useState<'entrada' | 'saida'>('saida');
+  const [type, setType] = useState<'entrada' | 'saida'>('entrada');
   const [value, setValue] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [date, setDate] = useState(new Date().toLocaleDateString('pt-BR'));
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [pickerModalVisible, setPickerModalVisible] = useState(false);
+
+  // Formatar data para exibição
+  const formatDate = (date: Date): string => {
+    return date.toLocaleDateString('pt-BR');
+  };
+
+  const date = formatDate(selectedDate);
 
   // Estilos dinâmicos baseados no tema
   const inputBorderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(255, 255, 255, 0.15)';
@@ -107,6 +116,17 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
     // Remove tudo que não é número ou vírgula/ponto
     const numbers = text.replace(/[^\d,.-]/g, '');
     return numbers;
+  };
+
+  const handleDateChange = (event: any, selectedDate?: Date) => {
+    // Atualiza a data enquanto o usuário seleciona
+    if (selectedDate) {
+      setSelectedDate(selectedDate);
+    }
+    // No Android, fecha automaticamente quando confirma
+    if (Platform.OS === 'android' && event.type === 'set') {
+      setShowDatePicker(false);
+    }
   };
 
   return (
@@ -198,16 +218,16 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
               {/* Date Input */}
               <View style={styles.inputGroup}>
                 <Text style={dynamicStyles.inputLabel}>Data</Text>
-                <View style={dynamicStyles.inputContainer}>
+                <TouchableOpacity
+                  style={dynamicStyles.inputContainer}
+                  onPress={() => setShowDatePicker(true)}
+                  activeOpacity={0.7}
+                >
                   <Feather name="calendar" size={20} color={colors.textSecondary} />
-                  <TextInput
-                    style={dynamicStyles.textInput}
-                    value={date}
-                    onChangeText={setDate}
-                    placeholder="DD/MM/AAAA"
-                    placeholderTextColor={colors.textSecondary}
-                  />
-                </View>
+                  <Text style={dynamicStyles.textInput}>
+                    {date}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -222,6 +242,38 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Date Picker Modal */}
+      <Modal
+        visible={showDatePicker}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowDatePicker(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={dynamicStyles.pickerModalContainer}>
+            <View style={dynamicStyles.pickerModalHeader}>
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(false)}
+                style={styles.pickerModalCloseButton}
+              >
+                <Text style={[styles.pickerModalCloseText, { color: colors.primary }]}>Concluir</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.datePickerContainer}>
+              <DateTimePicker
+                value={selectedDate}
+                mode="date"
+                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                onChange={handleDateChange}
+                locale="pt-BR"
+                style={styles.picker}
+                textColor={colors.text}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
 
       {/* Picker Modal */}
       <Modal
@@ -244,10 +296,11 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
               selectedValue={category}
               onValueChange={(itemValue) => setCategory(itemValue)}
               style={[styles.picker, { color: colors.text }]}
+              itemStyle={{ color: colors.text }}
             >
-              <Picker.Item label="Selecione uma categoria" value="" />
+              <Picker.Item label="Selecione uma categoria" value="" color={colors.text} />
               {categories.map((cat) => (
-                <Picker.Item key={cat} label={cat} value={cat} />
+                <Picker.Item key={cat} label={cat} value={cat} color={colors.text} />
               ))}
             </Picker>
           </View>

@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
   content: {
     width: '100%',
-    gap: 24,
+    gap: 16,
   },
   pageTitle: {
     fontSize: 32,
@@ -27,23 +27,24 @@ export default StyleSheet.create({
     letterSpacing: -0.8,
     paddingHorizontal: 4,
     lineHeight: 40,
+    marginBottom: 8,
   },
   typeSelectorCard: {
     width: '100%',
     flexDirection: 'row',
     borderRadius: 16,
-    padding: 6,
-    gap: 6,
+    padding: 4,
+    gap: 4,
   },
   typeButton: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 12,
-    gap: 10,
+    gap: 8,
   },
   typeButtonActive: {
     backgroundColor: PRIMARY_COLOR,
@@ -61,12 +62,12 @@ export default StyleSheet.create({
   formCard: {
     width: '100%',
     borderRadius: 16,
-    padding: 24,
-    gap: 24,
+    padding: 20,
+    gap: 16,
   },
   inputGroup: {
     width: '100%',
-    gap: 8,
+    gap: 6,
   },
   inputLabel: {
     fontSize: 15,
@@ -77,9 +78,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 12,
-    paddingHorizontal: 18,
-    paddingVertical: 16,
-    gap: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    gap: 10,
     borderWidth: 1.5,
   },
   currencySymbol: {
@@ -101,8 +102,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderRadius: 12,
-    paddingHorizontal: 18,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderWidth: 1.5,
   },
   pickerButtonText: {
@@ -154,15 +155,22 @@ export default StyleSheet.create({
   picker: {
     width: '100%',
     height: 200,
+    alignSelf: 'center',
+  },
+  datePickerContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
   },
   saveButton: {
     width: '100%',
-    paddingVertical: 18,
+    paddingVertical: 16,
     paddingHorizontal: 16,
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8,
+    marginTop: 4,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
