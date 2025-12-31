@@ -12,10 +12,11 @@ import Dashboard from './src/app/(private)/Dashboard';
 import AccountDetails from './src/app/(private)/Settings/AccountDetails';
 import NewTransition from './src/app/(private)/NewTransition';
 import Theme from './src/app/(private)/Settings/Theme';
+import Notifications from './src/app/(private)/Settings/Notifications';
 
-type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'monthly' | 'account-details' | 'new-transition' | 'theme';
+type Screen = 'login' | 'register' | 'welcome' | 'settings' | 'dashboard' | 'monthly' | 'account-details' | 'new-transition' | 'theme' | 'notifications';
 
-const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details', 'new-transition', 'theme'];
+const VALID_SCREENS: Screen[] = ['login', 'register', 'welcome', 'settings', 'dashboard', 'monthly', 'account-details', 'new-transition', 'theme', 'notifications'];
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -106,6 +107,10 @@ export default function App() {
         />
       ) : currentScreen === 'theme' ? (
         <Theme 
+          onGoBack={() => setCurrentScreen('settings')}
+        />
+      ) : currentScreen === 'notifications' ? (
+        <Notifications 
           onGoBack={() => setCurrentScreen('settings')}
         />
       ) : (

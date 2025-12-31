@@ -104,6 +104,10 @@ export default function Settings({ currentPlan = 'Básico', currentScreen = 'set
       if (onNavigate) {
         onNavigate('theme');
       }
+    } else if (sectionId === 'notifications') {
+      if (onNavigate) {
+        onNavigate('notifications');
+      }
     } else if (action) {
       action();
     } else {
