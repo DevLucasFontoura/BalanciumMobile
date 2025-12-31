@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
+import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './monthly.styles';
 
 interface MonthlyProps {
@@ -26,10 +27,59 @@ const monthNames = [
 ];
 
 export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogout }: MonthlyProps) {
+  const { theme, colors } = useTheme();
   const currentDate = new Date();
   const [selectedMonthIndex, setSelectedMonthIndex] = useState(currentDate.getMonth());
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
   const selectedMonth = monthNames[selectedMonthIndex];
+
+  // Estilos dinâmicos baseados no tema
+  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
+  const cardShadow = theme === 'light' ? {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  } : {};
+  
+  const dynamicStyles = {
+    wrapper: [styles.wrapper, { backgroundColor: colors.background }],
+    container: [styles.container, { backgroundColor: colors.background }],
+    headerTitle: [styles.headerTitle, { color: colors.text }],
+    monthSelector: [
+      styles.monthSelector, 
+      { backgroundColor: colors.surface, borderWidth: 1.5, borderColor }, 
+      cardShadow
+    ],
+    monthSelectorText: [styles.monthSelectorText, { color: colors.text }],
+    totalCard: [
+      styles.totalCard, 
+      { backgroundColor: colors.surface, borderWidth: 1.5, borderColor }, 
+      cardShadow
+    ],
+    totalCardTitle: [styles.totalCardTitle, { color: colors.textSecondary }],
+    saldoValue: [styles.totalCardValue, styles.saldoValue, { color: colors.text }],
+    tableTitle: [styles.tableTitle, { color: colors.text }],
+    tableDescription: [styles.tableDescription, { color: colors.textSecondary }],
+    transactionItem: [
+      styles.transactionItem, 
+      { backgroundColor: colors.surface, borderWidth: 1.5, borderColor }, 
+      cardShadow
+    ],
+    transactionDescription: [styles.transactionDescription, { color: colors.text }],
+    transactionCategory: [styles.transactionCategory, { color: colors.textSecondary }],
+    emptyStateText: [styles.emptyStateText, { color: colors.textSecondary }],
+  };
 
   // Dados fake para visualização
   const totals = {
@@ -78,28 +128,25 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View style={dynamicStyles.wrapper}>
       <ScrollView
-        style={styles.container}
+        style={dynamicStyles.container}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.content}>
           <View style={styles.headerSection}>
-            <Text style={styles.headerTitle}>Análise Mensal</Text>
-            <Text style={styles.headerSubtitle}>
-              Acompanhe suas finanças mês a mês de forma detalhada.
-            </Text>
+            <Text style={dynamicStyles.headerTitle}>Controle Mensal</Text>
 
-            <View style={styles.monthSelector}>
+            <View style={dynamicStyles.monthSelector}>
               <TouchableOpacity
                 style={styles.monthButton}
                 onPress={() => handleMonthChange('prev')}
                 activeOpacity={0.7}
               >
-                <Feather name="chevron-left" size={20} color="#ffffff" />
+                <Feather name="chevron-left" size={20} color={colors.text} />
               </TouchableOpacity>
-              <Text style={styles.monthSelectorText}>
+              <Text style={dynamicStyles.monthSelectorText}>
                 {selectedMonth} {selectedYear}
               </Text>
               <TouchableOpacity
@@ -107,27 +154,27 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
                 onPress={() => handleMonthChange('next')}
                 activeOpacity={0.7}
               >
-                <Feather name="chevron-right" size={20} color="#ffffff" />
+                <Feather name="chevron-right" size={20} color={colors.text} />
               </TouchableOpacity>
             </View>
           </View>
 
           <View style={styles.totalsSection}>
             <View style={styles.totalsRow}>
-              <View style={styles.totalCard}>
+              <View style={dynamicStyles.totalCard}>
                 <View style={styles.totalCardHeader}>
-                  <Feather name="arrow-up" size={16} color="#14ba82" />
-                  <Text style={styles.totalCardTitle}>Entradas</Text>
+                  <Feather name="arrow-up" size={18} color={colors.primary} />
+                  <Text style={dynamicStyles.totalCardTitle}>Entradas</Text>
                 </View>
                 <Text style={[styles.totalCardValue, styles.entradaValue]}>
                   {formatCurrency(totals.totalEntrada)}
                 </Text>
               </View>
 
-              <View style={styles.totalCard}>
+              <View style={dynamicStyles.totalCard}>
                 <View style={styles.totalCardHeader}>
-                  <Feather name="arrow-down" size={16} color="#ff4444" />
-                  <Text style={styles.totalCardTitle}>Saídas</Text>
+                  <Feather name="arrow-down" size={18} color="#ff4444" />
+                  <Text style={dynamicStyles.totalCardTitle}>Saídas</Text>
                 </View>
                 <Text style={[styles.totalCardValue, styles.saidaValue]}>
                   {formatCurrency(totals.totalSaida)}
@@ -135,12 +182,12 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
               </View>
             </View>
 
-              <View style={styles.totalCard}>
+              <View style={dynamicStyles.totalCard}>
                 <View style={styles.totalCardHeader}>
-                  <Feather name="dollar-sign" size={16} color="#ffffff" />
-                  <Text style={styles.totalCardTitle}>Saldo</Text>
+                  <Feather name="dollar-sign" size={18} color={colors.text} />
+                  <Text style={dynamicStyles.totalCardTitle}>Saldo</Text>
                 </View>
-                <Text style={[styles.totalCardValue, styles.saldoValue]}>
+                <Text style={dynamicStyles.saldoValue}>
                   {formatCurrency(totals.saldo)}
                 </Text>
               </View>
@@ -148,26 +195,26 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
 
           <View style={styles.tableSection}>
             <View style={styles.tableHeader}>
-              <Text style={styles.tableTitle}>Transações do Mês</Text>
-              <Text style={styles.tableDescription}>
+              <Text style={dynamicStyles.tableTitle}>Transações do Mês</Text>
+              <Text style={dynamicStyles.tableDescription}>
                 Lista completa de todas as transações realizadas em {selectedMonth} de {selectedYear}
               </Text>
             </View>
 
             {loading ? (
               <View style={styles.emptyState}>
-                <Text style={styles.emptyStateText}>Carregando transações...</Text>
+                <Text style={dynamicStyles.emptyStateText}>Carregando transações...</Text>
               </View>
             ) : transactions.length === 0 ? (
               <View style={styles.emptyState}>
-                <Text style={styles.emptyStateText}>
+                <Text style={dynamicStyles.emptyStateText}>
                   Nenhuma transação encontrada para {selectedMonth} de {selectedYear}
                 </Text>
               </View>
             ) : (
               <View style={styles.transactionsList}>
                 {transactions.map((transaction) => (
-                  <View key={transaction.id} style={styles.transactionItem}>
+                  <View key={transaction.id} style={dynamicStyles.transactionItem}>
                     <View style={styles.transactionLeft}>
                       <View style={[
                         styles.transactionIcon,
@@ -175,13 +222,13 @@ export default function Monthly({ currentScreen = 'monthly', onNavigate, onLogou
                       ]}>
                         <Feather
                           name={transaction.type === 'entrada' ? 'arrow-up' : 'arrow-down'}
-                          size={16}
-                          color={transaction.type === 'entrada' ? '#14ba82' : '#ff4444'}
+                          size={18}
+                          color={transaction.type === 'entrada' ? colors.primary : '#ff4444'}
                         />
                       </View>
                       <View style={styles.transactionInfo}>
-                        <Text style={styles.transactionDescription}>{transaction.description}</Text>
-                        <Text style={styles.transactionCategory}>{transaction.category} • {transaction.date}</Text>
+                        <Text style={dynamicStyles.transactionDescription}>{transaction.description}</Text>
+                        <Text style={dynamicStyles.transactionCategory}>{transaction.category} • {transaction.date}</Text>
                       </View>
                     </View>
                     <Text style={[

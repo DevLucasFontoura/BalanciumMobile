@@ -14,7 +14,7 @@ export default StyleSheet.create({
   contentContainer: {
     paddingTop: 60,
     paddingBottom: 100,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   content: {
     width: '100%',
@@ -26,25 +26,12 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: '800',
-    color: '#000000',
-    lineHeight: 36,
-    letterSpacing: -0.5,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    lineHeight: 48,
+    letterSpacing: -1,
+    textAlign: 'center',
+    marginBottom: 8,
   },
   headerSubtitle: {
     fontSize: 15,
@@ -57,27 +44,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 16,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    backgroundColor: '#000000',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    marginTop: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 16,
   },
   monthSelectorText: {
     fontSize: 18,
@@ -107,26 +77,9 @@ export default StyleSheet.create({
   },
   totalCard: {
     flex: 1,
-    padding: 18,
-    backgroundColor: '#000000',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    gap: 8,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    padding: 20,
+    borderRadius: 16,
+    gap: 10,
   },
   totalCardHeader: {
     flexDirection: 'row',
@@ -136,7 +89,6 @@ export default StyleSheet.create({
   totalCardTitle: {
     fontSize: 14,
     fontWeight: '500',
-    color: 'rgba(255, 255, 255, 0.7)',
   },
   totalCardValue: {
     fontSize: 22,
@@ -150,7 +102,7 @@ export default StyleSheet.create({
     color: '#ff4444',
   },
   saldoValue: {
-    color: '#ffffff',
+    // Cor será definida dinamicamente no componente
   },
   tableSection: {
     width: '100%',
@@ -162,24 +114,9 @@ export default StyleSheet.create({
     gap: 6,
   },
   tableTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '800',
-    color: '#000000',
-    letterSpacing: -0.3,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    letterSpacing: -0.5,
   },
   tableDescription: {
     fontSize: 15,
@@ -209,24 +146,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
-    backgroundColor: '#000000',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    borderRadius: 16,
   },
   transactionLeft: {
     flexDirection: 'row',
@@ -254,11 +174,10 @@ export default StyleSheet.create({
   transactionDescription: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#ffffff',
   },
   transactionCategory: {
     fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.6)',
+    fontWeight: '400',
   },
   transactionValue: {
     fontSize: 16,
