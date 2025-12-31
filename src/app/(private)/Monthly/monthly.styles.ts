@@ -26,12 +26,11 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   headerTitle: {
-    fontSize: 40,
+    fontSize: 32,
     fontWeight: '800',
-    lineHeight: 48,
-    letterSpacing: -1,
-    textAlign: 'center',
-    marginBottom: 8,
+    letterSpacing: -0.8,
+    paddingHorizontal: 4,
+    lineHeight: 40,
   },
   headerSubtitle: {
     fontSize: 15,

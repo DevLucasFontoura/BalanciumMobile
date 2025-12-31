@@ -22,12 +22,11 @@ export default StyleSheet.create({
     gap: 24,
   },
   pageTitle: {
-    fontSize: 40,
+    fontSize: 32,
     fontWeight: '800',
-    letterSpacing: -1,
-    lineHeight: 48,
-    marginBottom: 32,
-    textAlign: 'center',
+    letterSpacing: -0.8,
+    paddingHorizontal: 4,
+    lineHeight: 40,
   },
   typeSelectorCard: {
     width: '100%',

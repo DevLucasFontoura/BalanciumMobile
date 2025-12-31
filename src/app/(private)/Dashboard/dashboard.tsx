@@ -113,9 +113,6 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
         <View style={styles.content}>
           <View style={styles.headerSection}>
             <Text style={dynamicStyles.headerTitle}>Dashboard</Text>
-            <Text style={dynamicStyles.headerSubtitle}>
-              Visualização de gráficos e análises financeiras em tempo real
-            </Text>
 
             <View style={dynamicStyles.yearSelector}>
               <TouchableOpacity

@@ -26,24 +26,11 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: '800',
-    lineHeight: 36,
-    letterSpacing: -0.5,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    letterSpacing: -0.8,
+    paddingHorizontal: 4,
+    lineHeight: 40,
   },
   headerSubtitle: {
     fontSize: 15,
