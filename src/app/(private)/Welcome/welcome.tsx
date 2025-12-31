@@ -1,6 +1,7 @@
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
+import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './welcome.styles';
 
 interface WelcomeProps {
@@ -10,8 +11,61 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogout }: WelcomeProps) {
+  const { theme, colors } = useTheme();
   const userName = 'Lucas Fontoura'; // TODO: Buscar do contexto/perfil
   const currentYear = new Date().getFullYear();
+
+  // Estilos dinâmicos baseados no tema
+  const borderColor = theme === 'light' ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.12)';
+  const cardShadow = theme === 'light' ? {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  } : {};
+
+  const dynamicStyles = {
+    wrapper: [styles.wrapper, { backgroundColor: colors.background }],
+    container: [styles.container, { backgroundColor: colors.background }],
+    greetingText: [styles.greetingText, { color: colors.textSecondary }],
+    userNameText: [styles.userNameText, { color: colors.text }],
+    notificationButton: [
+      styles.notificationButton,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    balanceLabel: [styles.balanceLabel, { color: colors.textSecondary }],
+    balanceCard: [
+      styles.balanceCard,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    balanceValue: [styles.balanceValue, { color: colors.text }],
+    addButton: [
+      styles.addButton,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    sectionTitle: [styles.sectionTitle, { color: colors.text }],
+    sectionDescription: [styles.sectionDescription, { color: colors.textSecondary }],
+    card: [
+      styles.card,
+      { backgroundColor: colors.surface, borderColor },
+      cardShadow
+    ],
+    cardTitle: [styles.cardTitle, { color: colors.text }],
+    notificationBadge: [styles.notificationBadge, { borderColor: colors.background }],
+  };
 
   // Dados fake para visualização
   const yearTotals = {
@@ -29,49 +83,49 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View style={dynamicStyles.wrapper}>
       <ScrollView 
-        style={styles.container}
+        style={dynamicStyles.container}
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.content}>
           <View style={styles.topHeader}>
             <View style={styles.greetingContainer}>
-              <Text style={styles.greetingText}>Hello,</Text>
-              <Text style={styles.userNameText}>{userName}!</Text>
+              <Text style={dynamicStyles.greetingText}>Hello,</Text>
+              <Text style={dynamicStyles.userNameText}>{userName}!</Text>
             </View>
-            <TouchableOpacity style={styles.notificationButton} activeOpacity={0.7}>
-              <Feather name="bell" size={22} color="#000000" />
-              <View style={styles.notificationBadge} />
+            <TouchableOpacity style={dynamicStyles.notificationButton} activeOpacity={0.7}>
+              <Feather name="bell" size={22} color={colors.text} />
+              <View style={dynamicStyles.notificationBadge} />
             </TouchableOpacity>
           </View>
 
           <View style={styles.balanceSection}>
-            <Text style={styles.balanceLabel}>Current Balance</Text>
-            <View style={styles.balanceCard}>
-              <Text style={styles.balanceValue}>
+            <Text style={dynamicStyles.balanceLabel}>Current Balance</Text>
+            <View style={dynamicStyles.balanceCard}>
+              <Text style={dynamicStyles.balanceValue}>
                 {formatCurrency(yearTotals.saldo)}
               </Text>
-              <TouchableOpacity style={styles.addButton} activeOpacity={0.7}>
-                <Feather name="plus" size={24} color="#000000" />
+              <TouchableOpacity style={dynamicStyles.addButton} activeOpacity={0.7}>
+                <Feather name="plus" size={24} color={colors.text} />
               </TouchableOpacity>
             </View>
           </View>
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Resumo do Ano {currentYear}</Text>
-              <Text style={styles.sectionDescription}>
+              <Text style={dynamicStyles.sectionTitle}>Resumo do Ano {currentYear}</Text>
+              <Text style={dynamicStyles.sectionDescription}>
                 Totais gerais de todas as transações
               </Text>
             </View>
 
             <View style={styles.cardsContainer}>
-              <View style={styles.card}>
-                <Feather name="arrow-up-circle" size={40} color="#14ba82" style={styles.cardIcon} />
+              <View style={dynamicStyles.card}>
+                <Feather name="arrow-up-circle" size={40} color={colors.primary} style={styles.cardIcon} />
                 <View style={styles.cardContent}>
-                  <Text style={styles.cardTitle}>Entradas</Text>
+                  <Text style={dynamicStyles.cardTitle}>Entradas</Text>
                   <View style={styles.cardValueContainer}>
                     <Text style={[styles.currencySymbol, styles.entradaValue]}>R$</Text>
                     <Text style={[styles.cardValue, styles.entradaValue]}>
@@ -84,10 +138,10 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
                 </View>
               </View>
 
-              <View style={styles.card}>
+              <View style={dynamicStyles.card}>
                 <Feather name="arrow-down-circle" size={40} color="#ff4444" style={styles.cardIcon} />
                 <View style={styles.cardContent}>
-                  <Text style={styles.cardTitle}>Saídas</Text>
+                  <Text style={dynamicStyles.cardTitle}>Saídas</Text>
                   <View style={styles.cardValueContainer}>
                     <Text style={[styles.currencySymbol, styles.saidaValue]}>R$</Text>
                     <Text style={[styles.cardValue, styles.saidaValue]}>
@@ -100,10 +154,10 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
                 </View>
               </View>
 
-              <View style={styles.card}>
+              <View style={dynamicStyles.card}>
                 <Feather name="lock" size={40} color="#4A90E2" style={styles.cardIcon} />
                 <View style={styles.cardContent}>
-                  <Text style={styles.cardTitle}>Guardado</Text>
+                  <Text style={dynamicStyles.cardTitle}>Guardado</Text>
                   <View style={styles.cardValueContainer}>
                     <Text style={[styles.currencySymbol, styles.guardadoValue]}>R$</Text>
                     <Text style={[styles.cardValue, styles.guardadoValue]}>
