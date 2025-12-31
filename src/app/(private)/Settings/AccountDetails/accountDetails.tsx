@@ -65,9 +65,9 @@ export default function AccountDetails({ onNavigate, onLogout, onGoBack }: Accou
         useNativeDriver: true,
       }),
     ]).start(() => {
-      if (onGoBack) {
-        onGoBack();
-      }
+    if (onGoBack) {
+      onGoBack();
+    }
     });
   };
 
@@ -155,20 +155,20 @@ export default function AccountDetails({ onNavigate, onLogout, onGoBack }: Accou
           },
         ]}
       >
-        <ScrollView
+      <ScrollView
           style={dynamicStyles.container}
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.content}>
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.content}>
             <View style={styles.header}>
-              <TouchableOpacity
+          <TouchableOpacity
                 style={dynamicStyles.backButton}
                 onPress={handleGoBack}
-                activeOpacity={0.7}
-              >
+            activeOpacity={0.7}
+          >
                 <Feather name="chevron-left" size={24} color={colors.text} />
-              </TouchableOpacity>
+          </TouchableOpacity>
               <Text style={dynamicStyles.headerTitle}>Balancium Account</Text>
               <View style={{ width: 40 }} />
             </View>
@@ -187,7 +187,7 @@ export default function AccountDetails({ onNavigate, onLogout, onGoBack }: Accou
               </View>
               <Text style={dynamicStyles.profileName}>{userName}</Text>
               <Text style={dynamicStyles.profileEmail}>{userEmail}</Text>
-            </View>
+          </View>
 
             {/* Informações da Conta */}
             <View style={styles.sectionTitle}>
@@ -235,7 +235,7 @@ export default function AccountDetails({ onNavigate, onLogout, onGoBack }: Accou
                       name={section.icon}
                       size={22}
                       color={section.iconColor}
-                    />
+              />
                     <View style={styles.rowContent}>
                       <Text style={dynamicStyles.rowTitle}>{section.label}</Text>
                       <Text style={dynamicStyles.rowValue}>{section.value}</Text>
@@ -271,9 +271,9 @@ export default function AccountDetails({ onNavigate, onLogout, onGoBack }: Accou
                   </View>
                 );
               })}
-            </View>
           </View>
-        </ScrollView>
+        </View>
+      </ScrollView>
       </Animated.View>
     </View>
   );

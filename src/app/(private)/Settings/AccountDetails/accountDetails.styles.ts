@@ -100,7 +100,7 @@ export default StyleSheet.create({
   rowTitle: {
     fontSize: 15,
     fontWeight: '500',
-  },
+        },
   rowValue: {
     fontSize: 13,
     fontWeight: '400',
