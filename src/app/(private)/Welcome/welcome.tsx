@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Platform, Animated } from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './welcome.styles';
@@ -60,8 +61,10 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
   const userName = 'Lucas Fontoura'; // TODO: Buscar do contexto/perfil
   const currentYear = new Date().getFullYear();
 
+  const isDark = colors.background === '#000000';
+  
   // Estilos dinâmicos baseados no tema
-  const cardShadow = theme === 'light' ? {
+  const cardShadow = !isDark ? {
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -78,8 +81,6 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     }),
   } : {};
 
-  const isDark = colors.background === '#000000';
-
   const dynamicStyles = {
     wrapper: [styles.wrapper, { backgroundColor: colors.background }],
     container: [styles.container, { backgroundColor: colors.background }],
@@ -92,7 +93,6 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     balanceLabel: [styles.balanceLabel, { color: colors.textSecondary }],
     balanceCard: [
       styles.balanceCard,
-      { backgroundColor: '#e6f4e1' },
       cardShadow
     ],
     addButton: [
@@ -262,7 +262,12 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
           </View>
 
           <View style={styles.balanceSection}>
-            <View style={dynamicStyles.balanceCard}>
+            <LinearGradient
+              colors={['#e6f4e1', colors.surface]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={dynamicStyles.balanceCard}
+            >
               <View style={styles.cardContent}>
                 <Text style={styles.balanceLabelInCard}>Saldo disponível</Text>
                 <View style={styles.balanceValueRow}>
@@ -296,7 +301,7 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </LinearGradient>
           </View>
 
           <View style={styles.section}>
