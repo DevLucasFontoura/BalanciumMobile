@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Svg, Path, Circle, G } from 'react-native-svg';
+import { Svg, Path, Circle, G, Text as SvgText, Rect } from 'react-native-svg';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './dashboard.styles';
@@ -15,7 +15,7 @@ interface DashboardProps {
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CHART_WIDTH = SCREEN_WIDTH - 80;
-const CHART_HEIGHT = 200;
+const CHART_HEIGHT = 110;
 
 export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onLogout }: DashboardProps) {
   const { theme, colors } = useTheme();
@@ -78,23 +78,44 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
     return currentSaldo > bestSaldo ? current : best;
   }, monthlyData[0]);
 
+  // Filtrar meses para mostrar: Jan, Mar, Mai, Ago, Out, Dez
+  const monthNamesToShow = ['Jan', 'Mar', 'Mai', 'Ago', 'Out', 'Dez'];
+  const filteredMonthlyData = monthlyBalanceData.filter(data => 
+    monthNamesToShow.includes(data.month)
+  );
+  
   // Gráfico de linha - Saldo ao longo do tempo
   const maxBalance = Math.max(...monthlyBalanceData.map(d => d.saldo));
   const minBalance = 0; // Sempre começar do zero como na imagem
   const range = maxBalance - minBalance || 1;
   
-  const PADDING_LEFT = 40;
+  const PADDING_LEFT = 0; // Começar logo após os labels do eixo Y
   const PADDING_RIGHT = 20;
   const PADDING_TOP = 20;
   const PADDING_BOTTOM = 30;
   const CHART_CONTENT_WIDTH = CHART_WIDTH - PADDING_LEFT - PADDING_RIGHT;
   const CHART_CONTENT_HEIGHT = CHART_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
   
-  const points = monthlyBalanceData.map((data, index) => {
-    const x = PADDING_LEFT + (index / (monthlyBalanceData.length - 1)) * CHART_CONTENT_WIDTH;
+  // Calcular largura disponível para os meses (considerando o container do gráfico)
+  // O container tem paddingLeft: 24 no lineChartContainer, então os meses começam em 0 relativo ao SVG
+  const availableWidth = CHART_WIDTH - PADDING_RIGHT; // Largura disponível menos padding direito
+  const numberOfMonths = filteredMonthlyData.length;
+  
+  // Calcular espaçamento proporcional: distribuir uniformemente os meses no espaço disponível
+  // Deixar um pouco de margem nas extremidades
+  const marginSides = 0; // Sem margem nas laterais para usar todo o espaço
+  const usableWidth = availableWidth - (marginSides * 2);
+  
+  // Calcular a posição x de cada mês distribuída uniformemente
+  const points = filteredMonthlyData.map((data, index) => {
+    // Distribuir os meses uniformemente no espaço disponível
+    const x = marginSides + (index / (numberOfMonths - 1)) * usableWidth;
     const y = PADDING_TOP + CHART_CONTENT_HEIGHT - ((data.saldo - minBalance) / range) * CHART_CONTENT_HEIGHT;
     return { x, y, ...data };
   });
+  
+  // A largura total do SVG é o espaço usado pelos meses
+  const totalMonthsWidth = availableWidth;
 
   const pathData = points
     .map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`)
@@ -237,59 +258,93 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
               </Text>
             </View>
             <View style={styles.lineChartContainer}>
-              <View style={styles.chartWithLabels}>
-                {/* Labels do eixo Y */}
-                <View style={styles.yAxisLabels}>
-                  {yAxisLabels.map((label, index) => {
-                    const yPos = PADDING_TOP + (CHART_CONTENT_HEIGHT / (yAxisLabels.length - 1)) * index - 8;
-                    return (
-                      <Text
-                        key={index}
-                        style={[styles.yAxisLabel, { color: colors.textSecondary, top: yPos }]}
-                      >
-                        {label}
-                      </Text>
-                    );
-                  })}
-                </View>
-                {/* Gráfico SVG */}
-                <View style={styles.chartSvgContainer}>
-                  <Svg width={CHART_WIDTH} height={CHART_HEIGHT}>
-                    {/* Área preenchida */}
-                    <Path
-                      d={areaPathData}
-                      fill={isIncreasing ? '#14ba82' : '#ef4444'}
-                      fillOpacity="0.2"
-                    />
-                    {/* Linha */}
-                    <Path
-                      d={pathData}
-                      fill="none"
-                      stroke={isIncreasing ? '#14ba82' : '#ef4444'}
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    {/* Pontos */}
-                    {points.map((point, index) => (
-                      <Circle
-                        key={index}
-                        cx={point.x}
-                        cy={point.y}
-                        r="4"
-                        fill={isIncreasing ? '#14ba82' : '#ef4444'}
-                      />
-                    ))}
-                  </Svg>
-                </View>
-              </View>
-              {/* Labels dos meses no eixo X */}
-              <View style={styles.monthLabels}>
-                {monthlyBalanceData.map((data, index) => (
-                  <Text key={index} style={dynamicStyles.monthLabel}>
-                    {data.month}
+              {/* Labels do eixo Y - alinhados à esquerda, no nível do título */}
+              <View style={styles.yAxisLabelsContainer}>
+                {yAxisLabels.map((label, index) => (
+                  <Text
+                    key={index}
+                    style={[styles.yAxisLabel, { color: colors.textSecondary }]}
+                  >
+                    {label}
                   </Text>
                 ))}
+              </View>
+              {/* Gráfico SVG */}
+              <View style={styles.chartSvgWrapper}>
+                <Svg width={totalMonthsWidth} height={CHART_HEIGHT}>
+                  {/* Área preenchida */}
+                  <Path
+                    d={areaPathData}
+                    fill={isIncreasing ? '#14ba82' : '#ef4444'}
+                    fillOpacity="0.2"
+                  />
+                  {/* Linha */}
+                  <Path
+                    d={pathData}
+                    fill="none"
+                    stroke={isIncreasing ? '#14ba82' : '#ef4444'}
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Pontos */}
+                  {points.map((point, index) => {
+                    const isLastPoint = index === points.length - 1;
+                    const isFirstPoint = index === 0;
+                    
+                    return (
+                      <G key={index}>
+                        <Circle
+                          cx={point.x}
+                          cy={point.y}
+                          r="4"
+                          fill={isIncreasing ? '#14ba82' : '#ef4444'}
+                        />
+                        {/* Tooltip no último ponto */}
+                        {isLastPoint && (
+                          <G>
+                            {/* Linha conectando o ponto ao tooltip */}
+                            <Path
+                              d={`M ${point.x} ${point.y} L ${point.x} ${point.y - 30}`}
+                              stroke="#14ba82"
+                              strokeWidth="1.5"
+                            />
+                            {/* Retângulo do tooltip */}
+                            <Rect
+                              x={point.x - 55}
+                              y={point.y - 48}
+                              width="110"
+                              height="18"
+                              rx="6"
+                              fill="#ffffff"
+                              stroke="#14ba82"
+                              strokeWidth="1"
+                            />
+                            {/* Texto do tooltip */}
+                            <SvgText
+                              x={point.x}
+                              y={point.y - 37}
+                              fontSize="10"
+                              fontWeight="600"
+                              fill="#14ba82"
+                              textAnchor="middle"
+                            >
+                              {formatCurrency(point.saldo)}
+                            </SvgText>
+                          </G>
+                        )}
+                      </G>
+                    );
+                  })}
+                </Svg>
+                {/* Labels dos meses no eixo X */}
+                <View style={styles.monthLabels}>
+                  {filteredMonthlyData.map((data, index) => (
+                    <Text key={index} style={dynamicStyles.monthLabel}>
+                      {data.month}
+                    </Text>
+                  ))}
+                </View>
               </View>
             </View>
           </LinearGradient>

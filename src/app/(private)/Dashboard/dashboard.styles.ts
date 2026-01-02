@@ -1,6 +1,13 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 
 const PRIMARY_COLOR = '#14ba82';
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const CHART_WIDTH = SCREEN_WIDTH - 80;
+const CHART_HEIGHT = 110;
+const PADDING_LEFT = 40;
+const PADDING_RIGHT = 20;
+const PADDING_TOP = 20;
+const PADDING_BOTTOM = 30;
 
 export default StyleSheet.create({
   wrapper: {
@@ -114,37 +121,41 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: 10,
     marginBottom: 10,
-  },
-  chartWithLabels: {
+    marginLeft: -24,
+    marginRight: -24,
+    paddingLeft: 24,
     flexDirection: 'row',
-    width: '100%',
-    position: 'relative',
+    alignItems: 'flex-start',
   },
-  yAxisLabels: {
-    width: 50,
-    position: 'relative',
-    marginRight: -10,
+  yAxisLabelsContainer: {
+    marginRight: 0,
+    marginLeft: -18,
+    justifyContent: 'space-between',
+    height: CHART_HEIGHT,
+    paddingTop: PADDING_TOP,
+    paddingBottom: PADDING_BOTTOM,
+    paddingLeft: 0,
+    width: 45,
   },
   yAxisLabel: {
-    position: 'absolute',
     fontSize: 11,
     fontWeight: '500',
-    right: 0,
   },
-  chartSvgContainer: {
+  chartSvgWrapper: {
     flex: 1,
-    marginLeft: -50,
+    alignItems: 'flex-start',
+    marginLeft: -4,
   },
   monthLabels: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    paddingLeft: 50,
-    paddingRight: 20,
+    paddingLeft: 0,
+    paddingRight: PADDING_RIGHT,
     marginTop: 8,
   },
   monthLabel: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: '500',
   },
   monthlyBars: {
