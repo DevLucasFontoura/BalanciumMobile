@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
@@ -12,6 +13,7 @@ interface WelcomeProps {
 
 export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogout }: WelcomeProps) {
   const { theme, colors } = useTheme();
+  const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const userName = 'Lucas Fontoura'; // TODO: Buscar do contexto/perfil
   const currentYear = new Date().getFullYear();
 
@@ -45,9 +47,9 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     balanceLabel: [styles.balanceLabel, { color: colors.textSecondary }],
     balanceCard: [
       styles.balanceCard,
-      { backgroundColor: colors.surface }
+      { backgroundColor: '#e6f4e1' },
+      cardShadow
     ],
-    balanceValue: [styles.balanceValue, { color: colors.text }],
     addButton: [
       styles.addButton,
       { backgroundColor: colors.surface }
@@ -60,6 +62,11 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     ],
     cardTitle: [styles.cardTitle, { color: colors.text }],
     notificationBadge: [styles.notificationBadge, { borderColor: colors.background }],
+    groupedTotalsCard: [
+      styles.groupedTotalsCard,
+      { backgroundColor: colors.surface }
+    ],
+    totalCardTitle: [styles.totalCardTitle, { color: colors.textSecondary }],
   };
 
   // Dados fake para visualização
@@ -70,11 +77,40 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     guardado: 8500.00,
   };
 
+  // Cálculo de insights simples
+  const calculateInsight = () => {
+    const percentEconomizado = ((yearTotals.saldo / yearTotals.entradas) * 100).toFixed(0);
+    const percentGastos = ((yearTotals.saidas / yearTotals.entradas) * 100).toFixed(0);
+    
+    if (parseFloat(percentEconomizado) >= 20) {
+      return {
+        text: `Você economizou ${percentEconomizado}% da sua renda em ${currentYear} 👏`,
+        type: 'positive',
+      };
+    } else if (parseFloat(percentGastos) >= 80) {
+      return {
+        text: `Seus gastos representam ${percentGastos}% da sua renda. Considere economizar mais 💡`,
+        type: 'warning',
+      };
+    } else {
+      return {
+        text: `Você está no caminho certo! Mantenha o controle dos seus gastos 📊`,
+        type: 'neutral',
+      };
+    }
+  };
+
+  const insight = calculateInsight();
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(value);
+  };
+
+  const toggleBalanceVisibility = () => {
+    setIsBalanceVisible(!isBalanceVisible);
   };
 
   return (
@@ -97,73 +133,95 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
           </View>
 
           <View style={styles.balanceSection}>
-            <Text style={dynamicStyles.balanceLabel}>Current Balance</Text>
             <View style={dynamicStyles.balanceCard}>
-              <Text style={dynamicStyles.balanceValue}>
-                {formatCurrency(yearTotals.saldo)}
-              </Text>
-              <TouchableOpacity style={dynamicStyles.addButton} activeOpacity={0.7}>
-                <Feather name="plus" size={24} color={colors.text} />
-              </TouchableOpacity>
+              <View style={styles.cardContent}>
+                <Text style={[styles.balanceLabelInCard, { color: colors.textSecondary }]}>Saldo disponível</Text>
+                <View style={styles.balanceValueRow}>
+                  <View style={styles.cardValueContainer}>
+                    {isBalanceVisible ? (
+                      <>
+                        <Text style={[styles.heroCurrencySymbol, { color: colors.text }]}>R$</Text>
+                        <Text style={[styles.heroBalanceValue, { color: colors.text }]}>
+                          {new Intl.NumberFormat('pt-BR', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }).format(yearTotals.saldo)}
+                        </Text>
+                      </>
+                    ) : (
+                      <Text style={[styles.hiddenBalance, { color: colors.textSecondary }]}>
+                        •••••••
+                      </Text>
+                    )}
+                  </View>
+                  <TouchableOpacity 
+                    onPress={toggleBalanceVisibility}
+                    activeOpacity={0.7}
+                    style={styles.visibilityButtonInCard}
+                  >
+                    <Feather 
+                      name={isBalanceVisible ? "eye" : "eye-off"} 
+                      size={24} 
+                      color="#14ba82" 
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
           </View>
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Text style={dynamicStyles.sectionTitle}>Resumo do Ano {currentYear}</Text>
-              <Text style={dynamicStyles.sectionDescription}>
-                Totais gerais de todas as transações
-              </Text>
+              <Text style={dynamicStyles.sectionTitle}>Resumo de {currentYear}</Text>
             </View>
 
-            <View style={styles.cardsContainer}>
-              <View style={dynamicStyles.card}>
-                <Feather name="arrow-up-circle" size={40} color="#00D084" style={styles.cardIcon} />
-                <View style={styles.cardContent}>
-                  <Text style={dynamicStyles.cardTitle}>Entradas</Text>
-                  <View style={styles.cardValueContainer}>
-                    <Text style={[styles.currencySymbol, styles.entradaValue]}>R$</Text>
-                    <Text style={[styles.cardValue, styles.entradaValue]}>
-                      {new Intl.NumberFormat('pt-BR', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(yearTotals.entradas)}
+            <View style={styles.totalsSection}>
+              <View style={dynamicStyles.groupedTotalsCard}>
+                <View style={styles.totalsRow}>
+                  <View style={[
+                    styles.totalCard,
+                    { borderRightColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.05)' }
+                  ]}>
+                    <View style={styles.totalCardHeader}>
+                      <Feather name="arrow-up" size={16} color="#14ba82" />
+                      <Text style={dynamicStyles.totalCardTitle}>Total Entradas</Text>
+                    </View>
+                    <Text style={[styles.totalCardValue, styles.entradaValue]}>
+                      {formatCurrency(yearTotals.entradas)}
                     </Text>
                   </View>
-                </View>
-              </View>
 
-              <View style={dynamicStyles.card}>
-                <Feather name="arrow-down-circle" size={40} color="#FF1744" style={styles.cardIcon} />
-                <View style={styles.cardContent}>
-                  <Text style={dynamicStyles.cardTitle}>Saídas</Text>
-                  <View style={styles.cardValueContainer}>
-                    <Text style={[styles.currencySymbol, styles.saidaValue]}>R$</Text>
-                    <Text style={[styles.cardValue, styles.saidaValue]}>
-                      {new Intl.NumberFormat('pt-BR', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(yearTotals.saidas)}
+                  <View style={[styles.totalCard, styles.totalCardLast]}>
+                    <View style={styles.totalCardHeader}>
+                      <Feather name="arrow-down" size={16} color="#ff4444" />
+                      <Text style={dynamicStyles.totalCardTitle}>Total Saídas</Text>
+                    </View>
+                    <Text style={[styles.totalCardValue, styles.saidaValue]}>
+                      {formatCurrency(yearTotals.saidas)}
                     </Text>
                   </View>
                 </View>
               </View>
+            </View>
+          </View>
 
-              <View style={dynamicStyles.card}>
-                <Feather name="lock" size={40} color="#00A8FF" style={styles.cardIcon} />
-                <View style={styles.cardContent}>
-                  <Text style={dynamicStyles.cardTitle}>Guardado</Text>
-                  <View style={styles.cardValueContainer}>
-                    <Text style={[styles.currencySymbol, styles.guardadoValue]}>R$</Text>
-                    <Text style={[styles.cardValue, styles.guardadoValue]}>
-                      {new Intl.NumberFormat('pt-BR', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(yearTotals.guardado)}
-                    </Text>
-                  </View>
-                </View>
-              </View>
+          {/* Insight Section */}
+          <View style={styles.insightSection}>
+            <View style={[styles.insightCard, { backgroundColor: colors.surface }]}>
+              <Feather 
+                name="zap"
+                size={24} 
+                color="#14ba82"
+                style={styles.insightIcon}
+              />
+              <Text style={[styles.insightText, { color: colors.text }]}>
+                {insight.text}
+              </Text>
+              <Feather 
+                name="chevron-right"
+                size={20}
+                color={colors.textSecondary}
+              />
             </View>
           </View>
         </View>

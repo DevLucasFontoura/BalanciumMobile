@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "balancium-mobile",
+    "name": "Balancium",
     "slug": "balancium-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,10 @@
       "supportsTablet": true,
       "statusBarStyle": "light",
       "backgroundColor": "#14ba82",
-      "bundleIdentifier": "com.devlucasfontoura.balanciummobile"
+      "bundleIdentifier": "com.devlucasfontoura.balanciummobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -33,6 +36,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "664097fb-0e4a-4a9e-8087-7896ae814847"
+      }
     }
   }
 }

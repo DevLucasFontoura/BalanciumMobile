@@ -16,12 +16,12 @@ export default StyleSheet.create({
   pillContainer: {
     width: '100%',
     maxWidth: 600,
-    backgroundColor: '#000000',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     borderRadius: 28,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: 'rgba(255, 255, 255, 0.15)',
     overflow: 'hidden',
     position: 'relative',
     ...Platform.select({
@@ -31,11 +31,11 @@ export default StyleSheet.create({
           width: 0,
           height: 8,
         },
-        shadowOpacity: 0.15,
-        shadowRadius: 20,
+        shadowOpacity: 0.25,
+        shadowRadius: 24,
       },
       android: {
-        elevation: 8,
+        elevation: 12,
       },
     }),
   },
@@ -54,9 +54,29 @@ export default StyleSheet.create({
     borderRadius: 20,
   },
   menuItemActive: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
     borderWidth: 0.5,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(20, 186, 130, 0.3)',
+  },
+  iconGlowContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconGlow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: PRIMARY_COLOR,
+        shadowOffset: {
+          width: 0,
+          height: 0,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   addButton: {
     flex: 1,
@@ -67,9 +87,9 @@ export default StyleSheet.create({
     borderRadius: 20,
   },
   addButtonActive: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
     borderWidth: 0.5,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(20, 186, 130, 0.3)',
   },
   menuLabel: {
     fontSize: 11,

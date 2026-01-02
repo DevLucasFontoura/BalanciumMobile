@@ -1,6 +1,7 @@
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Feather } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import styles, { PRIMARY_COLOR } from './menu.styles';
 
 interface MenuItem {
@@ -21,17 +22,27 @@ interface MenuItemComponentProps {
 }
 
 const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) => {
+  const handlePress = () => {
+    if (Platform.OS === 'ios') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+    onPress();
+  };
+
   return (
     <TouchableOpacity
       style={[styles.menuItem, isActive && styles.menuItemActive]}
-      onPress={onPress}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
-      <Feather
-        name={item.iconName}
-        size={24}
-        color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
-      />
+      <View style={isActive && styles.iconGlowContainer}>
+        <Feather
+          name={item.iconName}
+          size={24}
+          color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
+          style={isActive && styles.iconGlow}
+        />
+      </View>
     </TouchableOpacity>
   );
 };
@@ -45,12 +56,18 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
   ];
 
   const handlePress = (item: MenuItem) => {
+    if (Platform.OS === 'ios') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
     if (onNavigate) {
       onNavigate(item.id);
     }
   };
 
   const handleAddTransaction = () => {
+    if (Platform.OS === 'ios') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     if (onNavigate) {
       onNavigate('new-transition');
     }
@@ -74,11 +91,14 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
             onPress={handleAddTransaction}
             activeOpacity={0.7}
           >
-            <Feather 
-              name="plus" 
-              size={24} 
-              color={currentScreen === 'new-transition' ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'} 
-            />
+            <View style={currentScreen === 'new-transition' && styles.iconGlowContainer}>
+              <Feather 
+                name="plus" 
+                size={24} 
+                color={currentScreen === 'new-transition' ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
+                style={currentScreen === 'new-transition' && styles.iconGlow}
+              />
+            </View>
           </TouchableOpacity>
 
           {menuItems.slice(2).map((item) => (

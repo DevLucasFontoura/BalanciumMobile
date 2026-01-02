@@ -60,21 +60,60 @@ export default StyleSheet.create({
   },
   balanceSection: {
     width: '100%',
-    gap: 16,
+    gap: 12,
   },
   balanceLabel: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '500',
-    letterSpacing: 0.4,
+    letterSpacing: 0.3,
+    textTransform: 'none',
     paddingHorizontal: 4,
-    marginBottom: 4,
-    textTransform: 'uppercase',
+    marginBottom: 8,
+  },
+  visibilityButton: {
+    padding: 4,
+  },
+  visibilityButtonInCard: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   balanceCard: {
     width: '100%',
     padding: 24,
-    borderRadius: 16,
+    borderRadius: 20,
+    flexDirection: 'column',
+    gap: 16,
     position: 'relative',
+    minHeight: 100,
+  },
+  balanceLabelInCard: {
+    fontSize: 18,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+    textTransform: 'none',
+    marginBottom: 4,
+  },
+  balanceValueRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  heroCurrencySymbol: {
+    fontSize: 32,
+    fontWeight: '800',
+    letterSpacing: -0.8,
+  },
+  heroBalanceValue: {
+    fontSize: 36,
+    fontWeight: '800',
+    letterSpacing: -1,
+  },
+  hiddenBalance: {
+    fontSize: 36,
+    fontWeight: '800',
+    letterSpacing: 4,
   },
   balanceValue: {
     fontSize: 36,
@@ -83,8 +122,8 @@ export default StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    right: 24,
-    top: 24,
+    right: 18,
+    top: 18,
     width: 48,
     height: 48,
     borderRadius: 24,
@@ -130,7 +169,8 @@ export default StyleSheet.create({
   },
   cardContent: {
     flex: 1,
-    gap: 8,
+    gap: 12,
+    width: '100%',
   },
   cardTitle: {
     fontSize: 16,
@@ -151,14 +191,89 @@ export default StyleSheet.create({
     fontWeight: '700',
     letterSpacing: -0.5,
   },
+  totalsSection: {
+    width: '100%',
+  },
+  totalsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 0,
+  },
+  groupedTotalsCard: {
+    width: '100%',
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+  totalCard: {
+    flex: 1,
+    padding: 18,
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
+    borderColor: 'transparent',
+    gap: 8,
+    borderRightWidth: 1,
+  },
+  totalCardLast: {
+    borderRightWidth: 0,
+  },
+  totalCardFull: {
+    width: '100%',
+    padding: 18,
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
+    borderColor: 'transparent',
+    gap: 8,
+    borderTopWidth: 1,
+  },
+  totalCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  totalCardTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  totalCardValue: {
+    fontSize: 22,
+    fontWeight: '700',
+    letterSpacing: -0.5,
+  },
   entradaValue: {
-    color: '#00D084', // Verde mais vivo
+    color: '#14ba82', // Verde primário
   },
   saidaValue: {
-    color: '#FF1744', // Vermelho mais vivo
+    color: '#ff4444', // Vermelho
   },
   guardadoValue: {
     color: '#00A8FF', // Azul mais vivo
+  },
+  saldoValue: {
+    color: '#14ba82', // Verde primário
+  },
+  insightSection: {
+    width: '100%',
+    marginTop: 8,
+  },
+  insightCard: {
+    width: '100%',
+    padding: 16,
+    borderRadius: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  insightIcon: {
+    marginRight: 0,
+  },
+  insightText: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: '500',
+    lineHeight: 22,
+    letterSpacing: 0.2,
   },
 });
 
