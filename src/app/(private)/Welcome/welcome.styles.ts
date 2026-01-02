@@ -23,7 +23,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 12,
   },
   greetingContainer: {
     flexDirection: 'column',
@@ -61,6 +61,7 @@ export default StyleSheet.create({
   balanceSection: {
     width: '100%',
     gap: 12,
+    marginTop: -8,
   },
   balanceLabel: {
     fontSize: 14,
@@ -277,6 +278,53 @@ export default StyleSheet.create({
     fontWeight: '500',
     lineHeight: 22,
     letterSpacing: 0.2,
+  },
+  tipsSection: {
+    width: '100%',
+    marginTop: 24,
+  },
+  tipsDivider: {
+    width: '100%',
+    height: 1,
+    marginBottom: 16,
+  },
+  tipsHeader: {
+    width: '100%',
+    paddingVertical: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tipsHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  tipsHeaderTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0.2,
+  },
+  tipsContent: {
+    width: '100%',
+    marginTop: 8,
+    paddingVertical: 8,
+  },
+  tipItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    padding: 16,
+    gap: 12,
+  },
+  tipIcon: {
+    marginTop: 2,
+  },
+  tipText: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 20,
+    letterSpacing: 0.1,
   },
 });
 

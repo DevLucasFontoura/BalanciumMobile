@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { useState, useRef, useEffect } from 'react';
+import { Text, View, ScrollView, TouchableOpacity, Platform, Animated } from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
@@ -11,9 +11,52 @@ interface WelcomeProps {
   onLogout?: () => void;
 }
 
+const financialTips = [
+  {
+    id: 1,
+    text: 'Crie um orçamento mensal e acompanhe seus gastos regularmente',
+    icon: 'trending-up' as const,
+  },
+  {
+    id: 2,
+    text: 'Reserve pelo menos 10% da sua renda para emergências',
+    icon: 'shield' as const,
+  },
+  {
+    id: 3,
+    text: 'Evite compras por impulso, sempre reflita antes de gastar',
+    icon: 'shopping-cart' as const,
+  },
+  {
+    id: 4,
+    text: 'Compare preços antes de fazer grandes compras',
+    icon: 'search' as const,
+  },
+  {
+    id: 5,
+    text: 'Pague suas contas em dia para evitar juros e multas',
+    icon: 'calendar' as const,
+  },
+  {
+    id: 6,
+    text: 'Invista em educação financeira, conhecimento é poder',
+    icon: 'book' as const,
+  },
+];
+
 export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogout }: WelcomeProps) {
   const { theme, colors } = useTheme();
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
+  const [isTipsExpanded, setIsTipsExpanded] = useState(false);
+  const tipsContentOpacity = useRef(new Animated.Value(0)).current;
+  const tipsContentScale = useRef(new Animated.Value(0.95)).current;
+  const tipAnimations = useRef(
+    financialTips.map(() => ({
+      opacity: new Animated.Value(0),
+      translateY: new Animated.Value(10),
+    }))
+  ).current;
+  
   const userName = 'Lucas Fontoura'; // TODO: Buscar do contexto/perfil
   const currentYear = new Date().getFullYear();
 
@@ -118,6 +161,86 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
   const toggleBalanceVisibility = () => {
     setIsBalanceVisible(!isBalanceVisible);
   };
+
+  const toggleTipsExpanded = () => {
+    const willExpand = !isTipsExpanded;
+    setIsTipsExpanded(willExpand);
+
+    if (willExpand) {
+      // Animação de abertura
+      Animated.parallel([
+        Animated.timing(tipsContentOpacity, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.spring(tipsContentScale, {
+          toValue: 1,
+          tension: 50,
+          friction: 7,
+          useNativeDriver: true,
+        }),
+      ]).start();
+
+      // Animações em cascata para cada item
+      const animations = tipAnimations.map((anim, index) => 
+        Animated.parallel([
+          Animated.timing(anim.opacity, {
+            toValue: 1,
+            duration: 300,
+            delay: index * 50,
+            useNativeDriver: true,
+          }),
+          Animated.timing(anim.translateY, {
+            toValue: 0,
+            duration: 300,
+            delay: index * 50,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+
+      Animated.stagger(50, animations).start();
+    } else {
+      // Animação de fechamento (reversa)
+      Animated.parallel([
+        Animated.timing(tipsContentOpacity, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(tipsContentScale, {
+          toValue: 0.95,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        ...tipAnimations.map((anim) =>
+          Animated.parallel([
+            Animated.timing(anim.opacity, {
+              toValue: 0,
+              duration: 200,
+              useNativeDriver: true,
+            }),
+            Animated.timing(anim.translateY, {
+              toValue: 10,
+              duration: 200,
+              useNativeDriver: true,
+            }),
+          ])
+        ),
+      ]).start();
+    }
+  };
+
+  useEffect(() => {
+    // Resetar animações quando o componente montar
+    tipsContentOpacity.setValue(0);
+    tipsContentScale.setValue(0.95);
+    tipAnimations.forEach((anim) => {
+      anim.opacity.setValue(0);
+      anim.translateY.setValue(10);
+    });
+  }, []);
 
   return (
     <View style={dynamicStyles.wrapper}>
@@ -229,6 +352,71 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
                 color={colors.textSecondary}
               />
             </View>
+          </View>
+
+          {/* Financial Tips Section */}
+          <View style={styles.tipsSection}>
+            <View style={[styles.tipsDivider, { backgroundColor: theme === 'light' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)' }]} />
+            <TouchableOpacity 
+              style={styles.tipsHeader}
+              onPress={toggleTipsExpanded}
+              activeOpacity={0.7}
+            >
+              <View style={styles.tipsHeaderLeft}>
+                <MaterialCommunityIcons 
+                  name="lightbulb-on-outline"
+                  size={22} 
+                  color="#14ba82"
+                />
+                <Text style={[styles.tipsHeaderTitle, { color: colors.text }]}>
+                  Dicas Financeiras
+                </Text>
+              </View>
+              <Feather 
+                name={isTipsExpanded ? "chevron-up" : "chevron-down"}
+                size={20}
+                color={colors.textSecondary}
+              />
+            </TouchableOpacity>
+            
+            {isTipsExpanded && (
+              <Animated.View 
+                style={[
+                  styles.tipsContent,
+                  {
+                    opacity: tipsContentOpacity,
+                    transform: [{ scale: tipsContentScale }],
+                  }
+                ]}
+              >
+                {financialTips.map((tip, index) => (
+                  <Animated.View 
+                    key={tip.id} 
+                    style={[
+                      styles.tipItem,
+                      index < financialTips.length - 1 && { 
+                        borderBottomWidth: 1, 
+                        borderBottomColor: theme === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)' 
+                      },
+                      {
+                        opacity: tipAnimations[index].opacity,
+                        transform: [{ translateY: tipAnimations[index].translateY }],
+                      }
+                    ]}
+                  >
+                    <Feather 
+                      name={tip.icon}
+                      size={18}
+                      color="#14ba82"
+                      style={styles.tipIcon}
+                    />
+                    <Text style={[styles.tipText, { color: colors.text }]}>
+                      {tip.text}
+                    </Text>
+                  </Animated.View>
+                ))}
+              </Animated.View>
+            )}
           </View>
         </View>
       </ScrollView>
