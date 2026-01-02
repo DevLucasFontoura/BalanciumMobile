@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './welcome.styles';
@@ -35,6 +35,8 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
     }),
   } : {};
 
+  const isDark = colors.background === '#000000';
+
   const dynamicStyles = {
     wrapper: [styles.wrapper, { backgroundColor: colors.background }],
     container: [styles.container, { backgroundColor: colors.background }],
@@ -67,6 +69,10 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
       { backgroundColor: colors.surface }
     ],
     totalCardTitle: [styles.totalCardTitle, { color: colors.textSecondary }],
+    visibilityButtonInCard: [
+      styles.visibilityButtonInCard,
+      { backgroundColor: isDark ? '#000000' : '#ffffff' }
+    ],
   };
 
   // Dados fake para visualização
@@ -135,13 +141,13 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
           <View style={styles.balanceSection}>
             <View style={dynamicStyles.balanceCard}>
               <View style={styles.cardContent}>
-                <Text style={[styles.balanceLabelInCard, { color: colors.textSecondary }]}>Saldo disponível</Text>
+                <Text style={styles.balanceLabelInCard}>Saldo disponível</Text>
                 <View style={styles.balanceValueRow}>
                   <View style={styles.cardValueContainer}>
                     {isBalanceVisible ? (
                       <>
-                        <Text style={[styles.heroCurrencySymbol, { color: colors.text }]}>R$</Text>
-                        <Text style={[styles.heroBalanceValue, { color: colors.text }]}>
+                        <Text style={styles.heroCurrencySymbol}>R$</Text>
+                        <Text style={styles.heroBalanceValue}>
                           {new Intl.NumberFormat('pt-BR', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
@@ -149,7 +155,7 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
                         </Text>
                       </>
                     ) : (
-                      <Text style={[styles.hiddenBalance, { color: colors.textSecondary }]}>
+                      <Text style={styles.hiddenBalance}>
                         •••••••
                       </Text>
                     )}
@@ -157,7 +163,7 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
                   <TouchableOpacity 
                     onPress={toggleBalanceVisibility}
                     activeOpacity={0.7}
-                    style={styles.visibilityButtonInCard}
+                    style={dynamicStyles.visibilityButtonInCard}
                   >
                     <Feather 
                       name={isBalanceVisible ? "eye" : "eye-off"} 
@@ -208,8 +214,8 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
           {/* Insight Section */}
           <View style={styles.insightSection}>
             <View style={[styles.insightCard, { backgroundColor: colors.surface }]}>
-              <Feather 
-                name="zap"
+              <MaterialCommunityIcons 
+                name="lightbulb-on-outline"
                 size={24} 
                 color="#14ba82"
                 style={styles.insightIcon}

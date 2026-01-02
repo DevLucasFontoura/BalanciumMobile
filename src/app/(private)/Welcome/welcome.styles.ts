@@ -76,7 +76,6 @@ export default StyleSheet.create({
   visibilityButtonInCard: {
     padding: 8,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   balanceCard: {
     width: '100%',
@@ -93,6 +92,7 @@ export default StyleSheet.create({
     letterSpacing: 0.3,
     textTransform: 'none',
     marginBottom: 4,
+    color: '#000000',
   },
   balanceValueRow: {
     flexDirection: 'row',
@@ -104,16 +104,19 @@ export default StyleSheet.create({
     fontSize: 32,
     fontWeight: '800',
     letterSpacing: -0.8,
+    color: '#000000',
   },
   heroBalanceValue: {
     fontSize: 36,
     fontWeight: '800',
     letterSpacing: -1,
+    color: '#000000',
   },
   hiddenBalance: {
     fontSize: 36,
     fontWeight: '800',
     letterSpacing: 4,
+    color: '#000000',
   },
   balanceValue: {
     fontSize: 36,
