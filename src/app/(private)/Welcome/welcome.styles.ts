@@ -152,13 +152,13 @@ export default StyleSheet.create({
     letterSpacing: -0.5,
   },
   entradaValue: {
-    color: PRIMARY_COLOR,
+    color: '#00D084', // Verde mais vivo
   },
   saidaValue: {
-    color: '#ff4444',
+    color: '#FF1744', // Vermelho mais vivo
   },
   guardadoValue: {
-    color: '#4A90E2',
+    color: '#00A8FF', // Azul mais vivo
   },
 });
 

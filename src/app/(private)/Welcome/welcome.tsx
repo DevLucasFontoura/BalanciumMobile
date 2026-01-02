@@ -118,7 +118,7 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
 
             <View style={styles.cardsContainer}>
               <View style={dynamicStyles.card}>
-                <Feather name="arrow-up-circle" size={40} color={colors.primary} style={styles.cardIcon} />
+                <Feather name="arrow-up-circle" size={40} color="#00D084" style={styles.cardIcon} />
                 <View style={styles.cardContent}>
                   <Text style={dynamicStyles.cardTitle}>Entradas</Text>
                   <View style={styles.cardValueContainer}>
@@ -134,7 +134,7 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
               </View>
 
               <View style={dynamicStyles.card}>
-                <Feather name="arrow-down-circle" size={40} color="#ff4444" style={styles.cardIcon} />
+                <Feather name="arrow-down-circle" size={40} color="#FF1744" style={styles.cardIcon} />
                 <View style={styles.cardContent}>
                   <Text style={dynamicStyles.cardTitle}>Saídas</Text>
                   <View style={styles.cardValueContainer}>
@@ -150,7 +150,7 @@ export default function Welcome({ currentScreen = 'welcome', onNavigate, onLogou
               </View>
 
               <View style={dynamicStyles.card}>
-                <Feather name="lock" size={40} color="#4A90E2" style={styles.cardIcon} />
+                <Feather name="lock" size={40} color="#00A8FF" style={styles.cardIcon} />
                 <View style={styles.cardContent}>
                   <Text style={dynamicStyles.cardTitle}>Guardado</Text>
                   <View style={styles.cardValueContainer}>
