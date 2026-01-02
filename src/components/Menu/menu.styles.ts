@@ -16,14 +16,12 @@ export default StyleSheet.create({
   pillContainer: {
     width: '100%',
     maxWidth: 600,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     borderRadius: 28,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.4)',
     overflow: 'hidden',
     position: 'relative',
+    backgroundColor: 'transparent',
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -31,13 +29,22 @@ export default StyleSheet.create({
           width: 0,
           height: 8,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.3,
         shadowRadius: 24,
       },
       android: {
         elevation: 12,
       },
     }),
+  },
+  blurContainer: {
+    width: '100%',
+    borderRadius: 28,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    overflow: 'hidden',
+    position: 'relative',
   },
   menu: {
     flexDirection: 'row',

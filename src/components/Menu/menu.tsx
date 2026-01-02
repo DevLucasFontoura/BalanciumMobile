@@ -75,42 +75,44 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
 
   return (
     <View style={styles.container}>
-      <BlurView intensity={60} tint="dark" style={styles.pillContainer}>
-        <View style={styles.menu}>
-          {menuItems.slice(0, 2).map((item) => (
-            <MenuItemComponent
-              key={item.id}
-              item={item}
-              isActive={currentScreen === item.id}
-              onPress={() => handlePress(item)}
-            />
-          ))}
-          
-          <TouchableOpacity
-            style={[styles.addButton, currentScreen === 'new-transition' && styles.addButtonActive]}
-            onPress={handleAddTransaction}
-            activeOpacity={0.7}
-          >
-            <View style={currentScreen === 'new-transition' && styles.iconGlowContainer}>
-              <Feather 
-                name="plus" 
-                size={24} 
-                color={currentScreen === 'new-transition' ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
-                style={currentScreen === 'new-transition' && styles.iconGlow}
+      <View style={styles.pillContainer}>
+        <BlurView intensity={60} tint="dark" style={styles.blurContainer}>
+          <View style={styles.menu}>
+            {menuItems.slice(0, 2).map((item) => (
+              <MenuItemComponent
+                key={item.id}
+                item={item}
+                isActive={currentScreen === item.id}
+                onPress={() => handlePress(item)}
               />
-            </View>
-          </TouchableOpacity>
+            ))}
+            
+            <TouchableOpacity
+              style={[styles.addButton, currentScreen === 'new-transition' && styles.addButtonActive]}
+              onPress={handleAddTransaction}
+              activeOpacity={0.7}
+            >
+              <View style={currentScreen === 'new-transition' && styles.iconGlowContainer}>
+                <Feather 
+                  name="plus" 
+                  size={24} 
+                  color={currentScreen === 'new-transition' ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
+                  style={currentScreen === 'new-transition' && styles.iconGlow}
+                />
+              </View>
+            </TouchableOpacity>
 
-          {menuItems.slice(2).map((item) => (
-            <MenuItemComponent
-              key={item.id}
-              item={item}
-              isActive={currentScreen === item.id}
-              onPress={() => handlePress(item)}
-            />
-          ))}
-        </View>
-      </BlurView>
+            {menuItems.slice(2).map((item) => (
+              <MenuItemComponent
+                key={item.id}
+                item={item}
+                isActive={currentScreen === item.id}
+                onPress={() => handlePress(item)}
+              />
+            ))}
+          </View>
+        </BlurView>
+      </View>
     </View>
   );
 }
