@@ -57,9 +57,9 @@ export default StyleSheet.create({
   neonTriangle: {
     position: 'absolute',
     left: '50%',
-    bottom: -8,
-    width: 12,
-    height: 40,
+    bottom: -20,
+    width: 70,
+    height: 60,
     zIndex: 0,
     ...Platform.select({
       ios: {
@@ -111,9 +111,9 @@ export default StyleSheet.create({
   neonTriangleSaida: {
     position: 'absolute',
     left: '50%',
-    bottom: -8,
-    width: 12,
-    height: 40,
+    bottom: -20,
+    width: 70,
+    height: 60,
     zIndex: 0,
     ...Platform.select({
       ios: {

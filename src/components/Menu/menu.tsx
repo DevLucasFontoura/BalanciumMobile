@@ -2,7 +2,7 @@ import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native
 import { BlurView } from 'expo-blur';
 import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import Svg, { Polygon } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 import styles, { PRIMARY_COLOR } from './menu.styles';
 
 interface MenuItem {
@@ -35,9 +35,9 @@ const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) 
     <View style={styles.menuItemWrapper}>
       {isActive && (
         <View style={styles.neonTriangle}>
-          <Svg width={12} height={40} viewBox="0 0 12 40" style={{ position: 'absolute', left: -6 }}>
-            <Polygon
-              points="6,0 0,40 12,40"
+          <Svg width={70} height={60} viewBox="0 0 70 60" style={{ position: 'absolute', left: -35 }}>
+            <Path
+              d="M 25 0 L 25 45 L 0 45 L 0 60 L 70 60 L 70 45 L 45 45 L 45 0 Z"
               fill={PRIMARY_COLOR}
               opacity={1}
             />
@@ -53,7 +53,7 @@ const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) 
           <Feather
             name={item.iconName}
             size={24}
-            color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
+            color={isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.6)'}
             style={isActive && styles.iconGlow}
           />
         </View>
@@ -106,9 +106,9 @@ export default function Menu({ currentScreen = 'welcome', onNavigate, transactio
             <View style={styles.addButtonWrapper}>
               {currentScreen === 'new-transition' && (
                 <View style={transactionType === 'saida' ? styles.neonTriangleSaida : styles.neonTriangle}>
-                  <Svg width={12} height={40} viewBox="0 0 12 40" style={{ position: 'absolute', left: -6 }}>
-                    <Polygon
-                      points="6,0 0,40 12,40"
+                  <Svg width={70} height={60} viewBox="0 0 70 60" style={{ position: 'absolute', left: -35 }}>
+                    <Path
+                      d="M 25 0 L 25 45 L 0 45 L 0 60 L 70 60 L 70 45 L 45 45 L 45 0 Z"
                       fill={transactionType === 'saida' ? '#ff4444' : PRIMARY_COLOR}
                       opacity={1}
                     />
@@ -129,11 +129,9 @@ export default function Menu({ currentScreen = 'welcome', onNavigate, transactio
                     name="plus" 
                     size={24} 
                     color={
-                      transactionType === 'saida' 
-                        ? '#ff4444' 
-                        : currentScreen === 'new-transition' 
-                          ? PRIMARY_COLOR 
-                          : 'rgba(255, 255, 255, 0.6)'
+                      currentScreen === 'new-transition' 
+                        ? '#ffffff' 
+                        : 'rgba(255, 255, 255, 0.6)'
                     }
                     style={currentScreen === 'new-transition' && styles.iconGlow}
                   />
