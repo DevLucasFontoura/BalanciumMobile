@@ -28,7 +28,7 @@ export default StyleSheet.create({
   headerSection: {
     width: '100%',
     gap: 8,
-    marginBottom: 8,
+    marginBottom: 0,
   },
   headerTitle: {
     fontSize: 32,
@@ -41,8 +41,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 16,
-    paddingVertical: 14,
+    marginTop: 8,
+    marginBottom: -8,
+    paddingVertical: 3,
     paddingHorizontal: 16,
     borderRadius: 16,
   },
@@ -51,8 +52,8 @@ export default StyleSheet.create({
     fontWeight: '600',
   },
   yearButton: {
-    width: 36,
-    height: 36,
+    width: 32,
+    height: 32,
     borderRadius: 8,
     backgroundColor: 'transparent',
     alignItems: 'center',
