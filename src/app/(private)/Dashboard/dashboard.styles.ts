@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Dimensions } from 'react-native';
 const PRIMARY_COLOR = '#14ba82';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CHART_WIDTH = SCREEN_WIDTH - 80;
-const CHART_HEIGHT = 110;
+const CHART_HEIGHT = 200;
 const PADDING_LEFT = 40;
 const PADDING_RIGHT = 20;
 const PADDING_TOP = 20;
@@ -60,10 +60,10 @@ export default StyleSheet.create({
   },
   balanceChartContainer: {
     width: '100%',
-    padding: 24,
+    padding: 20,
     borderRadius: 20,
     flexDirection: 'column',
-    gap: 16,
+    gap: 12,
     position: 'relative',
   },
   balanceChartTitle: {
@@ -121,42 +121,29 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: -24,
-    marginRight: -24,
-    paddingLeft: 24,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
-  yAxisLabelsContainer: {
-    marginRight: 0,
-    marginLeft: -18,
-    justifyContent: 'space-between',
-    height: CHART_HEIGHT,
-    paddingTop: PADDING_TOP,
-    paddingBottom: PADDING_BOTTOM,
-    paddingLeft: 0,
-    width: 45,
-  },
-  yAxisLabel: {
-    fontSize: 11,
-    fontWeight: '500',
-  },
-  chartSvgWrapper: {
-    flex: 1,
-    alignItems: 'flex-start',
-    marginLeft: -4,
-  },
-  monthLabels: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingLeft: 0,
-    paddingRight: PADDING_RIGHT,
-    marginTop: 8,
+  chartStyle: {
+    marginVertical: 8,
+    borderRadius: 16,
+    backgroundColor: 'transparent',
   },
   monthLabel: {
     fontSize: 12,
     fontWeight: '500',
+  },
+  monthLabelsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: CHART_WIDTH,
+    paddingHorizontal: 16,
+    marginTop: 8,
+  },
+  monthLabelChart: {
+    fontSize: 12,
+    fontWeight: '500',
+    flex: 1,
+    textAlign: 'center',
   },
   monthlyBars: {
     flexDirection: 'row',

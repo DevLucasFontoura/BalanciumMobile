@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Platform, Dimensions } from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Svg, Path, Circle, G, Text as SvgText, Rect } from 'react-native-svg';
+import { LineChart } from 'react-native-chart-kit';
 import Menu from '../../../components/Menu';
 import { useTheme } from '../../../lib/contexts/ThemeContext';
 import styles from './dashboard.styles';
@@ -15,7 +15,7 @@ interface DashboardProps {
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CHART_WIDTH = SCREEN_WIDTH - 80;
-const CHART_HEIGHT = 110;
+const CHART_HEIGHT = 200;
 
 export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onLogout }: DashboardProps) {
   const { theme, colors } = useTheme();
@@ -24,18 +24,18 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
 
   // Dados mock - saldo acumulado ao longo dos meses
   const monthlyBalanceData = [
-    { month: 'Jan', saldo: 1200 },
-    { month: 'Fev', saldo: 2500 },
-    { month: 'Mar', saldo: 3800 },
-    { month: 'Abr', saldo: 5200 },
-    { month: 'Mai', saldo: 6800 },
-    { month: 'Jun', saldo: 8100 },
-    { month: 'Jul', saldo: 9500 },
-    { month: 'Ago', saldo: 10800 },
-    { month: 'Set', saldo: 12100 },
-    { month: 'Out', saldo: 13200 },
-    { month: 'Nov', saldo: 14500 },
-    { month: 'Dez', saldo: 15800 },
+    { month: 'Jan', saldo: 5000 },
+    { month: 'Fev', saldo: 6200 },
+    { month: 'Mar', saldo: 7500 },
+    { month: 'Abr', saldo: 6800 },
+    { month: 'Mai', saldo: 9200 },
+    { month: 'Jun', saldo: 11000 },
+    { month: 'Jul', saldo: 10500 },
+    { month: 'Ago', saldo: 12800 },
+    { month: 'Set', saldo: 14500 },
+    { month: 'Out', saldo: 13800 },
+    { month: 'Nov', saldo: 16200 },
+    { month: 'Dez', saldo: 300 },
   ];
 
   const monthlyData = [
@@ -83,63 +83,51 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
   const filteredMonthlyData = monthlyBalanceData.filter(data => 
     monthNamesToShow.includes(data.month)
   );
-  
-  // Gráfico de linha - Saldo ao longo do tempo
-  const maxBalance = Math.max(...monthlyBalanceData.map(d => d.saldo));
-  const minBalance = 0; // Sempre começar do zero como na imagem
-  const range = maxBalance - minBalance || 1;
-  
-  const PADDING_LEFT = 0; // Começar logo após os labels do eixo Y
-  const PADDING_RIGHT = 20;
-  const PADDING_TOP = 20;
-  const PADDING_BOTTOM = 30;
-  const CHART_CONTENT_WIDTH = CHART_WIDTH - PADDING_LEFT - PADDING_RIGHT;
-  const CHART_CONTENT_HEIGHT = CHART_HEIGHT - PADDING_TOP - PADDING_BOTTOM;
-  
-  // Calcular largura disponível para os meses (considerando o container do gráfico)
-  // O container tem paddingLeft: 24 no lineChartContainer, então os meses começam em 0 relativo ao SVG
-  const availableWidth = CHART_WIDTH - PADDING_RIGHT; // Largura disponível menos padding direito
-  const numberOfMonths = filteredMonthlyData.length;
-  
-  // Calcular espaçamento proporcional: distribuir uniformemente os meses no espaço disponível
-  // Deixar um pouco de margem nas extremidades
-  const marginSides = 0; // Sem margem nas laterais para usar todo o espaço
-  const usableWidth = availableWidth - (marginSides * 2);
-  
-  // Calcular a posição x de cada mês distribuída uniformemente
-  const points = filteredMonthlyData.map((data, index) => {
-    // Distribuir os meses uniformemente no espaço disponível
-    const x = marginSides + (index / (numberOfMonths - 1)) * usableWidth;
-    const y = PADDING_TOP + CHART_CONTENT_HEIGHT - ((data.saldo - minBalance) / range) * CHART_CONTENT_HEIGHT;
-    return { x, y, ...data };
-  });
-  
-  // A largura total do SVG é o espaço usado pelos meses
-  const totalMonthsWidth = availableWidth;
-
-  const pathData = points
-    .map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`)
-    .join(' ');
-
-  // Área preenchida: linha + fechar até a base
-  const areaPathData = `${pathData} L ${points[points.length - 1].x} ${PADDING_TOP + CHART_CONTENT_HEIGHT} L ${points[0].x} ${PADDING_TOP + CHART_CONTENT_HEIGHT} Z`;
 
   const isIncreasing = monthlyBalanceData[monthlyBalanceData.length - 1].saldo > monthlyBalanceData[0].saldo;
   
   // Calcular crescimento do ano
   const crescimentoAno = monthlyBalanceData[monthlyBalanceData.length - 1].saldo - monthlyBalanceData[0].saldo;
   
-  // Labels do eixo Y (formatar para "R$ X mil")
-  const yAxisLabels = [];
-  const numLabels = 3; // 0, meio, máximo
-  for (let i = numLabels; i >= 0; i--) {
-    const value = (maxBalance / numLabels) * i;
-    if (value >= 1000) {
-      yAxisLabels.push(`R$ ${(value / 1000).toFixed(0)} mil`);
-    } else {
-      yAxisLabels.push('R$ 0');
+  // Preparar dados para o gráfico
+  const chartData = {
+    labels: filteredMonthlyData.map(d => d.month),
+    datasets: [
+      {
+        data: filteredMonthlyData.map(d => d.saldo),
+        color: (opacity = 1) => `rgba(35, 190, 137, ${opacity})`,
+        strokeWidth: 3
+      }
+    ]
+  };
+
+  const isDark = colors.background === '#000000';
+  
+  const chartConfig = {
+    backgroundColor: 'transparent',
+    backgroundGradientFrom: 'transparent',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: 'transparent',
+    backgroundGradientToOpacity: 0,
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(35, 190, 137, ${opacity})`,
+    labelColor: (opacity = 1) => isDark ? `rgba(255, 255, 255, ${opacity * 0.87})` : `rgba(0, 0, 0, ${opacity * 0.87})`,
+    fillShadowGradient: '#23be89',
+    fillShadowGradientOpacity: 1,
+    propsForDots: {
+      r: '4',
+      strokeWidth: '0',
+      stroke: '#23be89'
+    },
+    propsForBackgroundLines: {
+      strokeDasharray: '',
+      stroke: colors.textSecondary,
+      strokeOpacity: 0.1
+    },
+    propsForVerticalLabels: {
+      fill: isDark ? '#ffffff' : '#000000'
     }
-  }
+  };
 
   // Gráfico de pizza simples - Categorias
   let currentAngle = -90;
@@ -258,94 +246,21 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
               </Text>
             </View>
             <View style={styles.lineChartContainer}>
-              {/* Labels do eixo Y - alinhados à esquerda, no nível do título */}
-              <View style={styles.yAxisLabelsContainer}>
-                {yAxisLabels.map((label, index) => (
-                  <Text
-                    key={index}
-                    style={[styles.yAxisLabel, { color: colors.textSecondary }]}
-                  >
-                    {label}
-                  </Text>
-                ))}
-              </View>
-              {/* Gráfico SVG */}
-              <View style={styles.chartSvgWrapper}>
-                <Svg width={totalMonthsWidth} height={CHART_HEIGHT}>
-                  {/* Área preenchida */}
-                  <Path
-                    d={areaPathData}
-                    fill={isIncreasing ? '#14ba82' : '#ef4444'}
-                    fillOpacity="0.2"
-                  />
-                  {/* Linha */}
-                  <Path
-                    d={pathData}
-                    fill="none"
-                    stroke={isIncreasing ? '#14ba82' : '#ef4444'}
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  {/* Pontos */}
-                  {points.map((point, index) => {
-                    const isLastPoint = index === points.length - 1;
-                    const isFirstPoint = index === 0;
-                    
-                    return (
-                      <G key={index}>
-                        <Circle
-                          cx={point.x}
-                          cy={point.y}
-                          r="4"
-                          fill={isIncreasing ? '#14ba82' : '#ef4444'}
-                        />
-                        {/* Tooltip no último ponto */}
-                        {isLastPoint && (
-                          <G>
-                            {/* Linha conectando o ponto ao tooltip */}
-                            <Path
-                              d={`M ${point.x} ${point.y} L ${point.x} ${point.y - 30}`}
-                              stroke="#14ba82"
-                              strokeWidth="1.5"
-                            />
-                            {/* Retângulo do tooltip */}
-                            <Rect
-                              x={point.x - 55}
-                              y={point.y - 48}
-                              width="110"
-                              height="18"
-                              rx="6"
-                              fill="#ffffff"
-                              stroke="#14ba82"
-                              strokeWidth="1"
-                            />
-                            {/* Texto do tooltip */}
-                            <SvgText
-                              x={point.x}
-                              y={point.y - 37}
-                              fontSize="10"
-                              fontWeight="600"
-                              fill="#14ba82"
-                              textAnchor="middle"
-                            >
-                              {formatCurrency(point.saldo)}
-                            </SvgText>
-                          </G>
-                        )}
-                      </G>
-                    );
-                  })}
-                </Svg>
-                {/* Labels dos meses no eixo X */}
-                <View style={styles.monthLabels}>
-                  {filteredMonthlyData.map((data, index) => (
-                    <Text key={index} style={dynamicStyles.monthLabel}>
-                      {data.month}
-                    </Text>
-                  ))}
-                </View>
-              </View>
+              <LineChart
+                data={chartData}
+                width={CHART_WIDTH}
+                height={CHART_HEIGHT}
+                chartConfig={chartConfig}
+                bezier
+                style={styles.chartStyle}
+                withVerticalLabels={true}
+                withHorizontalLabels={true}
+                withDots={true}
+                withShadow={true}
+                withInnerLines={true}
+                withOuterLines={false}
+                fromZero={true}
+              />
             </View>
           </LinearGradient>
 
