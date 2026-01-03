@@ -15,7 +15,7 @@ interface DashboardProps {
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CHART_WIDTH = SCREEN_WIDTH - 40;
-const CHART_HEIGHT = 200;
+const CHART_HEIGHT = 120;
 
 export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onLogout }: DashboardProps) {
   const { theme, colors } = useTheme();
@@ -78,8 +78,9 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
     return currentSaldo > bestSaldo ? current : best;
   }, monthlyData[0]);
 
-  // Mostrar todos os meses
-  const filteredMonthlyData = monthlyBalanceData;
+  // Filtrar para mostrar apenas alguns meses selecionados (mantendo Jan e Dez)
+  const monthsToShow = ['Jan', 'Mar', 'Abr', 'Mai', 'Jun', 'Ago', 'Out', 'Nov', 'Dez'];
+  const filteredMonthlyData = monthlyBalanceData.filter(d => monthsToShow.includes(d.month));
 
   const isIncreasing = monthlyBalanceData[monthlyBalanceData.length - 1].saldo > monthlyBalanceData[0].saldo;
   
@@ -116,11 +117,11 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
       strokeWidth: '0',
       stroke: '#23be89'
     },
-    propsForBackgroundLines: {
-      strokeDasharray: '',
-      stroke: colors.textSecondary,
-      strokeOpacity: 0.1
-    },
+    // propsForBackgroundLines: {
+    //   strokeDasharray: '',
+    //   stroke: colors.textSecondary,
+    //   strokeOpacity: 0.1
+    // },
     propsForVerticalLabels: {
       fill: isDark ? '#ffffff' : '#000000'
     }
@@ -254,12 +255,18 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
                 withHorizontalLabels={true}
                 withDots={true}
                 withShadow={true}
-                withHorizontalLines={true}
-                withVerticalLines={false}
                 withInnerLines={false}
+                withVerticalLines={false}
                 withOuterLines={false}
                 fromZero={true}
-                formatYLabel={(value) => `R$ ${value}`}
+                segments={3}
+                formatYLabel={(value) => {
+                  const numValue = parseFloat(value);
+                  if (numValue >= 1000) {
+                    return `R$ ${(numValue / 1000).toFixed(0)} mil`;
+                  }
+                  return `R$ ${value}`;
+                }}
               />
             </View>
           </LinearGradient>

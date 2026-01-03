@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Dimensions } from 'react-native';
 const PRIMARY_COLOR = '#14ba82';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CHART_WIDTH = SCREEN_WIDTH - 40;
-const CHART_HEIGHT = 200;
+const CHART_HEIGHT = 120;
 const PADDING_LEFT = 40;
 const PADDING_RIGHT = 20;
 const PADDING_TOP = 20;
@@ -60,10 +60,10 @@ export default StyleSheet.create({
   },
   balanceChartContainer: {
     width: '100%',
-    padding: 20,
+    padding: 14,
     borderRadius: 20,
     flexDirection: 'column',
-    gap: 12,
+    gap: 8,
     position: 'relative',
   },
   balanceChartTitle: {
@@ -108,7 +108,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: -5,
     paddingHorizontal: 0,
   },
   balanceGrowthIndicator: {
@@ -119,12 +119,17 @@ export default StyleSheet.create({
   },
   lineChartContainer: {
     width: '100%',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 6,
+    marginBottom: 0,
+    paddingBottom: 15,
     alignItems: 'center',
+    marginLeft: 10,
+    overflow: 'visible',
   },
   chartStyle: {
-    marginVertical: 8,
+    marginVertical: 0,
+    marginBottom: -10,
+    paddingBottom: 10,
     borderRadius: 16,
     backgroundColor: 'transparent',
   },
