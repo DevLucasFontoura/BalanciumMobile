@@ -1,7 +1,8 @@
-import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import Svg, { Polygon } from 'react-native-svg';
 import styles, { PRIMARY_COLOR } from './menu.styles';
 
 interface MenuItem {
@@ -13,6 +14,7 @@ interface MenuItem {
 interface MenuProps {
   currentScreen?: string;
   onNavigate?: (screen: string) => void;
+  transactionType?: 'entrada' | 'saida';
 }
 
 interface MenuItemComponentProps {
@@ -30,24 +32,37 @@ const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) 
   };
 
   return (
-    <TouchableOpacity
-      style={[styles.menuItem, isActive && styles.menuItemActive]}
-      onPress={handlePress}
-      activeOpacity={0.7}
-    >
-      <View style={isActive && styles.iconGlowContainer}>
-        <Feather
-          name={item.iconName}
-          size={24}
-          color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
-          style={isActive && styles.iconGlow}
-        />
-      </View>
-    </TouchableOpacity>
+    <View style={styles.menuItemWrapper}>
+      {isActive && (
+        <View style={styles.neonTriangle}>
+          <Svg width={12} height={40} viewBox="0 0 12 40" style={{ position: 'absolute', left: -6 }}>
+            <Polygon
+              points="6,0 0,40 12,40"
+              fill={PRIMARY_COLOR}
+              opacity={1}
+            />
+          </Svg>
+        </View>
+      )}
+      <TouchableOpacity
+        style={[styles.menuItem, isActive && styles.menuItemActive]}
+        onPress={handlePress}
+        activeOpacity={0.7}
+      >
+        <View style={isActive && styles.iconGlowContainer}>
+          <Feather
+            name={item.iconName}
+            size={24}
+            color={isActive ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
+            style={isActive && styles.iconGlow}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProps) {
+export default function Menu({ currentScreen = 'welcome', onNavigate, transactionType }: MenuProps) {
   const menuItems: MenuItem[] = [
     { id: 'welcome', label: 'Início', iconName: 'home' },
     { id: 'dashboard', label: 'Dashboard', iconName: 'bar-chart-2' },
@@ -76,7 +91,8 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
   return (
     <View style={styles.container}>
       <View style={styles.pillContainer}>
-        <BlurView intensity={60} tint="dark" style={styles.blurContainer}>
+        <View style={styles.blurContainer}>
+          <BlurView intensity={40} tint="dark" style={styles.blurOverlay} />
           <View style={styles.menu}>
             {menuItems.slice(0, 2).map((item) => (
               <MenuItemComponent
@@ -87,20 +103,43 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
               />
             ))}
             
-            <TouchableOpacity
-              style={[styles.addButton, currentScreen === 'new-transition' && styles.addButtonActive]}
-              onPress={handleAddTransaction}
-              activeOpacity={0.7}
-            >
-              <View style={currentScreen === 'new-transition' && styles.iconGlowContainer}>
-                <Feather 
-                  name="plus" 
-                  size={24} 
-                  color={currentScreen === 'new-transition' ? PRIMARY_COLOR : 'rgba(255, 255, 255, 0.6)'}
-                  style={currentScreen === 'new-transition' && styles.iconGlow}
-                />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.addButtonWrapper}>
+              {currentScreen === 'new-transition' && (
+                <View style={transactionType === 'saida' ? styles.neonTriangleSaida : styles.neonTriangle}>
+                  <Svg width={12} height={40} viewBox="0 0 12 40" style={{ position: 'absolute', left: -6 }}>
+                    <Polygon
+                      points="6,0 0,40 12,40"
+                      fill={transactionType === 'saida' ? '#ff4444' : PRIMARY_COLOR}
+                      opacity={1}
+                    />
+                  </Svg>
+                </View>
+              )}
+              <TouchableOpacity
+                style={[
+                  styles.addButton, 
+                  currentScreen === 'new-transition' && styles.addButtonActive,
+                  transactionType === 'saida' && styles.addButtonActiveSaida
+                ]}
+                onPress={handleAddTransaction}
+                activeOpacity={0.7}
+              >
+                <View style={currentScreen === 'new-transition' && styles.iconGlowContainer}>
+                  <Feather 
+                    name="plus" 
+                    size={24} 
+                    color={
+                      transactionType === 'saida' 
+                        ? '#ff4444' 
+                        : currentScreen === 'new-transition' 
+                          ? PRIMARY_COLOR 
+                          : 'rgba(255, 255, 255, 0.6)'
+                    }
+                    style={currentScreen === 'new-transition' && styles.iconGlow}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
 
             {menuItems.slice(2).map((item) => (
               <MenuItemComponent
@@ -111,7 +150,7 @@ export default function Menu({ currentScreen = 'welcome', onNavigate }: MenuProp
               />
             ))}
           </View>
-        </BlurView>
+        </View>
       </View>
     </View>
   );

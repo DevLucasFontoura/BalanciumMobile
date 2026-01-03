@@ -307,7 +307,7 @@ export default function NewTransition({ onNavigate, onGoBack, onSave }: NewTrans
         </View>
       </Modal>
 
-      <Menu currentScreen="new-transition" onNavigate={onNavigate} />
+      <Menu currentScreen="new-transition" onNavigate={onNavigate} transactionType={type} />
     </View>
   );
 }
