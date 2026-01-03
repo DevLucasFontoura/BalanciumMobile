@@ -14,7 +14,7 @@ interface DashboardProps {
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CHART_WIDTH = SCREEN_WIDTH - 80;
+const CHART_WIDTH = SCREEN_WIDTH - 40;
 const CHART_HEIGHT = 200;
 
 export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onLogout }: DashboardProps) {
@@ -24,18 +24,18 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
 
   // Dados mock - saldo acumulado ao longo dos meses
   const monthlyBalanceData = [
-    { month: 'Jan', saldo: 5000 },
-    { month: 'Fev', saldo: 6200 },
-    { month: 'Mar', saldo: 7500 },
-    { month: 'Abr', saldo: 6800 },
-    { month: 'Mai', saldo: 9200 },
-    { month: 'Jun', saldo: 11000 },
-    { month: 'Jul', saldo: 10500 },
-    { month: 'Ago', saldo: 12800 },
-    { month: 'Set', saldo: 14500 },
-    { month: 'Out', saldo: 13800 },
-    { month: 'Nov', saldo: 16200 },
-    { month: 'Dez', saldo: 300 },
+    { month: 'Jan', saldo: 800 },
+    { month: 'Fev', saldo: 650 },   // pequena queda
+    { month: 'Mar', saldo: 1_200 },
+    { month: 'Abr', saldo: 1_050 }, // leve ajuste
+    { month: 'Mai', saldo: 2_300 },
+    { month: 'Jun', saldo: 4_800 }, // crescimento forte
+    { month: 'Jul', saldo: 7_200 },
+    { month: 'Ago', saldo: 7_050 }, // estabilidade
+    { month: 'Set', saldo: 8_300 },
+    { month: 'Out', saldo: 9_100 },
+    { month: 'Nov', saldo: 10_900 },
+    { month: 'Dez', saldo: 12_360 }, // valor final destacado
   ];
 
   const monthlyData = [
@@ -78,11 +78,8 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
     return currentSaldo > bestSaldo ? current : best;
   }, monthlyData[0]);
 
-  // Filtrar meses para mostrar: Jan, Mar, Mai, Ago, Out, Dez
-  const monthNamesToShow = ['Jan', 'Mar', 'Mai', 'Ago', 'Out', 'Dez'];
-  const filteredMonthlyData = monthlyBalanceData.filter(data => 
-    monthNamesToShow.includes(data.month)
-  );
+  // Mostrar todos os meses
+  const filteredMonthlyData = monthlyBalanceData;
 
   const isIncreasing = monthlyBalanceData[monthlyBalanceData.length - 1].saldo > monthlyBalanceData[0].saldo;
   
@@ -257,9 +254,12 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
                 withHorizontalLabels={true}
                 withDots={true}
                 withShadow={true}
-                withInnerLines={true}
+                withHorizontalLines={true}
+                withVerticalLines={false}
+                withInnerLines={false}
                 withOuterLines={false}
                 fromZero={true}
+                formatYLabel={(value) => `R$ ${value}`}
               />
             </View>
           </LinearGradient>

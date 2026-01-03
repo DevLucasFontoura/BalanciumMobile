@@ -2,7 +2,7 @@ import { StyleSheet, Platform, Dimensions } from 'react-native';
 
 const PRIMARY_COLOR = '#14ba82';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CHART_WIDTH = SCREEN_WIDTH - 80;
+const CHART_WIDTH = SCREEN_WIDTH - 40;
 const CHART_HEIGHT = 200;
 const PADDING_LEFT = 40;
 const PADDING_RIGHT = 20;
