@@ -333,4 +333,39 @@ export default StyleSheet.create({
     fontWeight: '400',
     lineHeight: 20,
   },
+  tooltip: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    minWidth: 100,
+    alignItems: 'center',
+    zIndex: 1000,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  tooltipMonth: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  tooltipValue: {
+    color: '#23be89',
+    fontSize: 14,
+    fontWeight: '700',
+  },
 });

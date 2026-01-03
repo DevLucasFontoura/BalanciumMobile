@@ -21,6 +21,7 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
   const { theme, colors } = useTheme();
   const currentDate = new Date();
   const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
+  const [tooltip, setTooltip] = useState<{ visible: boolean; month: string; value: number; x: number; y: number } | null>(null);
 
   // Dados mock - saldo acumulado ao longo dos meses
   const monthlyBalanceData = [
@@ -156,6 +157,21 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
     }
   };
 
+  const handleDataPointClick = (data: { index: number; x: number; y: number; value: number }) => {
+    if (data.index >= 0 && data.index < filteredMonthlyData.length) {
+      const selectedMonth = filteredMonthlyData[data.index];
+      setTooltip({
+        visible: true,
+        month: selectedMonth.month,
+        value: selectedMonth.saldo,
+        x: data.x,
+        y: data.y - 40, // Posiciona acima do ponto
+      });
+      // Remove o tooltip após 3 segundos
+      setTimeout(() => setTooltip(null), 3000);
+    }
+  };
+
   // Estilos dinâmicos baseados no tema
   const cardShadow = theme === 'light' ? {
     ...Platform.select({
@@ -244,30 +260,47 @@ export default function Dashboard({ currentScreen = 'dashboard', onNavigate, onL
               </Text>
             </View>
             <View style={styles.lineChartContainer}>
-              <LineChart
-                data={chartData}
-                width={CHART_WIDTH}
-                height={CHART_HEIGHT}
-                chartConfig={chartConfig}
-                bezier
-                style={styles.chartStyle}
-                withVerticalLabels={true}
-                withHorizontalLabels={true}
-                withDots={true}
-                withShadow={true}
-                withInnerLines={false}
-                withVerticalLines={false}
-                withOuterLines={false}
-                fromZero={true}
-                segments={3}
-                formatYLabel={(value) => {
-                  const numValue = parseFloat(value);
-                  if (numValue >= 1000) {
-                    return `R$ ${(numValue / 1000).toFixed(0)} mil`;
-                  }
-                  return `R$ ${value}`;
-                }}
-              />
+              <View style={{ position: 'relative' }}>
+                <LineChart
+                  data={chartData}
+                  width={CHART_WIDTH}
+                  height={CHART_HEIGHT}
+                  chartConfig={chartConfig}
+                  bezier
+                  style={styles.chartStyle}
+                  withVerticalLabels={true}
+                  withHorizontalLabels={true}
+                  withDots={true}
+                  withShadow={true}
+                  withInnerLines={false}
+                  withVerticalLines={false}
+                  withOuterLines={false}
+                  fromZero={true}
+                  segments={3}
+                  formatYLabel={(value) => {
+                    const numValue = parseFloat(value);
+                    if (numValue >= 1000) {
+                      return `R$ ${(numValue / 1000).toFixed(0)} mil`;
+                    }
+                    return `R$ ${value}`;
+                  }}
+                  onDataPointClick={handleDataPointClick}
+                />
+                {tooltip && tooltip.visible && (
+                  <View
+                    style={[
+                      styles.tooltip,
+                      {
+                        left: tooltip.x - 50,
+                        top: tooltip.y,
+                      },
+                    ]}
+                  >
+                    <Text style={styles.tooltipMonth}>{tooltip.month}</Text>
+                    <Text style={styles.tooltipValue}>{formatCurrency(tooltip.value)}</Text>
+                  </View>
+                )}
+              </View>
             </View>
           </LinearGradient>
 
