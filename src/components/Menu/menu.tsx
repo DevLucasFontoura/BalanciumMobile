@@ -3,6 +3,7 @@ import { BlurView } from 'expo-blur';
 import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import Svg, { Path } from 'react-native-svg';
+import { useTheme } from '../../lib/contexts/ThemeContext';
 import styles, { PRIMARY_COLOR } from './menu.styles';
 
 interface MenuItem {
@@ -63,6 +64,9 @@ const MenuItemComponent = ({ item, isActive, onPress }: MenuItemComponentProps) 
 };
 
 export default function Menu({ currentScreen = 'welcome', onNavigate, transactionType }: MenuProps) {
+  const { colors } = useTheme();
+  const isDark = colors.background === '#000000';
+  
   const menuItems: MenuItem[] = [
     { id: 'welcome', label: 'Início', iconName: 'home' },
     { id: 'dashboard', label: 'Dashboard', iconName: 'bar-chart-2' },
@@ -88,10 +92,23 @@ export default function Menu({ currentScreen = 'welcome', onNavigate, transactio
     }
   };
 
+  const dynamicStyles = {
+    pillContainer: [
+      styles.pillContainer,
+      { 
+        borderColor: isDark ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.7)'
+      }
+    ],
+    blurContainer: [
+      styles.blurContainer,
+      { backgroundColor: isDark ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0.5)' }
+    ],
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.pillContainer}>
-        <View style={styles.blurContainer}>
+      <View style={dynamicStyles.pillContainer}>
+        <View style={dynamicStyles.blurContainer}>
           <BlurView intensity={40} tint="dark" style={styles.blurOverlay} />
           <View style={styles.menu}>
             {menuItems.slice(0, 2).map((item) => (
